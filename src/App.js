@@ -1,8 +1,10 @@
-
+import Authentication from "./signInComponents/Authentication"
 
 function App() {
   return (
-    <h1>Heading</h1>
+    <div>
+      <Authentication />
+    </div>
   );
 }
 
