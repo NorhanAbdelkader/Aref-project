@@ -85,6 +85,12 @@
     flex-grow: 3;
 }
 
-
-
+.likes-comments button {
+    width: 100%;
+    border-radius: 10px;
+}
+.likes-comments button:hover {
+    cursor: pointer;
+    background-color: #f5dfa4;
+}
 

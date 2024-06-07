@@ -1,6 +1,8 @@
 
-.Homepage{
+.home-components {
     display:flex;
     flex-direction: column;
-    width:60%
+    width:60%;
+    margin-top: 150px;
+    margin-right: 400px;
 }

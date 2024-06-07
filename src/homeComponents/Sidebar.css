@@ -1,6 +1,8 @@
 .sidebar {
     position: fixed;
-    top: 111.25px; /* the height of the navbar */
+    top: 111.25px; 
+    /* the height of the navbar */
+    /* margin-top: 111.25px; */
     right: 0; 
     height: 100vh;
     width: 250px;

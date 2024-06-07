@@ -97,7 +97,7 @@ function Article({id,name,content,profilePhoto,images,numLikes,comments}) {
     
     <div className="likes-comments">
       <button onClick={handleLike} > 
-        <AiFillLike color={likeClicked ? 'Maroon ' : 'gray'} size={30} /></button>
+        <AiFillLike color={likeClicked ? '#014D4E' : 'gray'} size={30} /></button>
 
       <button onClick={handleDisLike} >
         <AiFillDislike color={dislikeClicked ? 'Maroon' : 'gray'} size={30} /></button>
@@ -153,7 +153,7 @@ function Article({id,name,content,profilePhoto,images,numLikes,comments}) {
         
         {comments}
         <div className="currentComment">
-        <input  ref={inputRef} type="text" placeholder="write you comment" />
+        <input  ref={inputRef} type="text" placeholder="اكتب تعليقك" />
         <button onClick={handleAddComment}>اضف تعليق</button>
         </div>
         

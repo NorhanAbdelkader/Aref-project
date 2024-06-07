@@ -5,7 +5,8 @@
     padding: 15px;
     border-color: black;
     box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
-    margin :20px
+    margin :20px;
+    margin-right: 10px;
 }
 .post-input {
     width: 100%;
@@ -43,12 +44,17 @@
     width: 50%;
     margin-top: 16px;
     margin-right: 150px;
-    background-color: lightblue;
+    background-color: #014D4E;
     color: white;
     border: none;
     padding: 10px;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.post-btn:hover {
+    cursor: pointer;
+    background-color: #01393a;
 }
 

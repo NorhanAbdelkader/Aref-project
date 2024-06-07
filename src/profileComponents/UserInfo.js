@@ -21,8 +21,8 @@ export function ProfileCard({username,bio,coverPhoto,profilePhoto}){
                
                </div>
                <div className="social-icons">
-                   <button >Add Friend</button>
-                   <button >Message</button>
+                   <button >إضافة صديق</button>
+                   <button >إرسال رسالة</button>
                </div>
         </div>
    </div>

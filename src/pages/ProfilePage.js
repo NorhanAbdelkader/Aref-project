@@ -2,6 +2,7 @@
 import { useState,useRef,useEffect  } from "react";
 import { ProfileCard} from "../profileComponents/UserInfo";
 import {UserInformationAndArticles} from "../profileComponents/UserArticles";
+import Navbar from "../generalComponents/Navbar";
 
 
 function UserProfile(){
@@ -19,6 +20,7 @@ function UserProfile(){
     };
     return(
         <>
+        <Navbar />
         <ProfileCard username="tasneem" bio={Bio} coverPhoto={coverPhoto} profilePhoto={profilePhoto} />
         <UserInformationAndArticles interests={["first interest","second interest"]} 
        coverPhoto={coverPhoto} profilePhoto={profilePhoto} changeProfilePhoto={changeProfilePhoto} 

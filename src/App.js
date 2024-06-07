@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./landingComponents/MainPage";
 import Authentication from "./authenticationComponents/Authentication";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Homepage";
+
 import LibraryPage from "./pages/LibraryPage";
-import ProfilePage from "./pages/ProfilePage";
+import UserProfile from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         {/*Private */}
         <Route path="/home" element={<HomePage />} />
         <Route path="/library" element={<LibraryPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<UserProfile />} />
 
       </Routes>
     </main>
