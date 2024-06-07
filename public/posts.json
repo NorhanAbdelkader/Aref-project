@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "username": "user1",
+        "profilePhoto": "logo512.png",
+        "content": "This is the first post",
+        "images":["logo512.png"],
+        "numLikes": 10,
+        "numComments": 2,
+        "comments": [
+            {
+              "id": 1,
+              "username": "commenter3",
+              "comment": "Nice post!"
+            },
+            {
+              "id": 2,
+              "username": "commenter4",
+              "comment": "Very informative."
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "username": "user2",
+        "profilePhoto": "logo512.png",
+        "images":["logo512.png"],
+        "content": "This is the second post",
+        "numLikes": 20,
+        "numComments": 3,
+        "comments": [
+            {
+              "id": 1,
+              "username": "commenter3",
+              "comment": "Nice post!"
+            },
+            {
+              "id": 2,
+              "username": "commenter4",
+              "comment": "Very informative."
+            }
+        ]
+    }
+]
