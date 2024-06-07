@@ -1,0 +1,49 @@
+
+
+.user-article{
+    display:flex;
+    flex-direction: column;
+    width: 50%
+}
+
+.user-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    height:min-content;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+  .user-information h3,li {
+    text-align: right;
+  }
+  
+  .user-information button {
+    background-color: #ddd;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .user-information button:hover {
+    background-color: #ccc;
+  }
+
+  .userInformation-Articles{
+    display: flex;
+    flex-direction: row;
+   
+  }
+  userInformation-Articles UserArticles{
+    background-color: black;
+    flex-grow: 3;
+  }
+
+
+  
