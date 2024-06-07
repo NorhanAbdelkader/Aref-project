@@ -3,9 +3,10 @@ import "./Authentication.css";
 import { FaUserLarge } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa";
 import { validateEmail, validatePasswoed } from "./utils";
+import { Link } from "react-router-dom";
 
-function Authentication() {
-    const [isLogin, setIsLogin] = useState(true);
+function Authentication(props) {
+    const [isLogin, setIsLogin] = useState(props.signIn);
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -47,7 +48,7 @@ function Authentication() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // TODO: Submit the form 
+        // TODO: Submit the form and navigate to the home page
         if (isLogin) {
             const data = { email, password };
             console.log('Logging in with', data);
@@ -65,20 +66,20 @@ function Authentication() {
                 <h1>{isLogin ? 'تسجيل الدخول' : 'إنشاء حساب'}</h1>
                 <form onSubmit={handleSubmit}>
 
-                {!isLogin && (
-                    <div className="input-field">
-                        <label htmlFor="first-name"> <FaUserLarge className="icon" /> اسم المستخدم <sup>*</sup> </label>
-                        <input type="text" id="first-name" name="first-name" value={firstName} onChange={(e) => { setFirstName(e.target.value); }} required />
-                    </div> 
-                )}
+                    {!isLogin && (
+                        <div className="input-field">
+                            <label htmlFor="first-name"> <FaUserLarge className="icon" /> اسم المستخدم <sup>*</sup> </label>
+                            <input type="text" id="first-name" name="first-name" value={firstName} onChange={(e) => { setFirstName(e.target.value); }} required />
+                        </div>
+                    )}
 
-                {!isLogin && (
-                    <div className="input-field">
-                        <label htmlFor="last-name"> <FaUserLarge className="icon" /> اسم العائلة <sup>*</sup> </label>
-                        <input type="text" id="last-name" name="last-name" value={lastName} onChange={(e) => { setLastName(e.target.value); }} required />
+                    {!isLogin && (
+                        <div className="input-field">
+                            <label htmlFor="last-name"> <FaUserLarge className="icon" /> اسم العائلة <sup>*</sup> </label>
+                            <input type="text" id="last-name" name="last-name" value={lastName} onChange={(e) => { setLastName(e.target.value); }} required />
 
-                    </div>
-                )}
+                        </div>
+                    )}
                     <div className="input-field">
                         <label htmlFor="email"> <FaUserLarge className="icon" /> البريد الإلكتروني <sup>*</sup>  </label>
                         <input type="email" id="email" name="email" value={email} onChange={(e) => { setEmail(e.target.value); }} required />
@@ -86,7 +87,7 @@ function Authentication() {
                     <div className="input-field">
                         <label htmlFor="pwd"> <FaLock className="icon" /> كلمة السر <sup>*</sup> </label>
                         <input type="password" id="pwd" name="pwd" value={password} onChange={(e) => { setPassword(e.target.value); }} required />
-                        
+
                     </div>
                     {!isLogin && (
                         <div className="input-field">
@@ -94,10 +95,21 @@ function Authentication() {
                             <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value); }} required />
                         </div>
                     )}
-                    <button type="submit" disabled={!getIsFormValid()}> {isLogin ? 'تسجيل الدخول' : 'إنشاء حساب'} </button>
+                    <button type="submit" id="submit-button" disabled={!getIsFormValid()}> {isLogin ? 'تسجيل الدخول' : 'إنشاء حساب'} </button>
 
                     <div className="switch-form" onClick={switchForm}>
-                        {isLogin ? "ليس لديك حساب؟ إنشاء حساب جديد" : 'لديك بالفعل حساب؟ سجل الدخول الي حسابك'}
+
+                    {!isLogin && (
+                        <Link to="/signIn">
+                        لديك بالفعل حساب؟ سجل الدخول الي حسابك
+                        </Link>
+                    )}
+                    {isLogin && (
+                        <Link to="/signUp">
+                            ليس لديك حساب؟ إنشاء حساب
+                        </Link>
+                    )}
+                        {/* {isLogin ? "ليس لديك حساب؟ إنشاء حساب جديد" : 'لديك بالفعل حساب؟ سجل الدخول الي حسابك'} */}
                     </div>
 
                 </form>

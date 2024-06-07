@@ -1,0 +1,42 @@
+:root {
+    --deep-teal: #014D4E;
+    --off-white: #FAF3E0;
+  }
+  
+.footer {
+    background-color: var(--deep-teal);
+    color: var(--off-white);
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0px 2.98px 7.45px var(--deep-teal);
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-links, .footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-links a, .footer-social a {
+    font-size: 30px;
+    color: var(--off-white);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover, .footer-social a:hover {
+    color: #800000;
+}
+
+.footer-bottom {
+    font-size: 0.875rem;
+    right: 0;
+}
+  
+  
