@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import CreateArticle from "../homeComponents/CreateArticle";
 import Article from "../homeComponents/Article";
 import './Homepage.css';
-import Navbar from "../generalComponents/Navbar";
+import Navbar from "../components/generalComponents/Navbar";
 import Sidebar from "../homeComponents/Sidebar";
 
 

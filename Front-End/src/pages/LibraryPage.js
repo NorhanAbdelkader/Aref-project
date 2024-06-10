@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../generalComponents/Navbar'
+import Navbar from '../components/generalComponents/Navbar'
 import Sidebar from '../homeComponents/Sidebar'
 
 const LibraryPage = () => {

@@ -2,7 +2,7 @@
 import { useState,useRef,useEffect  } from "react";
 import { ProfileCard} from "../profileComponents/UserInfo";
 import {UserInformationAndArticles} from "../profileComponents/UserArticles";
-import Navbar from "../generalComponents/Navbar";
+import Navbar from "../components/generalComponents/Navbar";
 
 
 function UserProfile(){
