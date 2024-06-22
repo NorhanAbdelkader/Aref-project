@@ -42,6 +42,10 @@ const articleSchema = new Schema ({
         validate: numImagesValidator
     }
     ,
+    publicImagesId: {
+        type: [String]
+    }
+    ,
     likesNum: {
         type: Number,
         default: 0,
@@ -60,9 +64,34 @@ const articleSchema = new Schema ({
         min: 0
     }
     ,
+    likedUsers: {
+        // TODO:
+        // type: [Types.ObjectId],
+        // ref: 'User',
+        // default: []
+        type: [Number],
+        default: []
+    }
+    ,
+    dislikedUsers: {
+        // TODO:
+        // type: [Types.ObjectId],
+        // ref: 'User',
+        // default: []
+        type: [Number],
+        default: []
+    }
+    ,
+    reportedUsers: {
+        // TODO:
+        // type: [Types.ObjectId],
+        // ref: 'User',
+        // default: []
+        type: [Number],
+        default: []
+    }
+    ,
     comments: {
-        // type: [commentModel]
-        // array of comments' ids not the comments themselves
         type: [Types.ObjectId],
         ref: 'Comment',
         default: []
