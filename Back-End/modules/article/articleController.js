@@ -1,4 +1,5 @@
 import articleModel from "../../database/models/articleModel.js";
+import userModel from "../../database/models/userModel.js";
 import cloudinary from "../../services/cloudinary.js";
 
 // Article: userid, content, images, likes_num, dislikes_num, comments, reports_num
@@ -13,13 +14,11 @@ export const createArticle = async(req, res) => {
     if (!userId) {
         return res.status(400).json({ error: 'userId is required' });
     }
-    // TODO: Check if the userId exists
-    // const user = await userModel.findById(userId);
+    const user = await userModel.findById(userId);
 
-    // if (!user) {
-    //     // bad request
-    //     res.status(400).json({ error: 'User not found, ensure the user id is correct' })'
-    // }
+    if (!user) {
+        res.status(400).json({ error: 'User not found, ensure the user id is correct' });
+    }
     const images = [];
     const publicIds = [];
 
@@ -39,6 +38,8 @@ export const createArticle = async(req, res) => {
     {
         const newArticle = new articleModel(req.body);
         const savedArticle = await newArticle.save();
+        await user.updateOne({ $addToSet: { articles : savedArticle._id } });
+
         res.status(201).json(savedArticle);
     } 
     catch (error) {
@@ -53,12 +54,10 @@ export const editArticle = async(req, res) => {
         const article = await articleModel.findById(req.params.articleId);
 
         if (!article) {
-            // bad request
             res.status(400).json({ error: 'Article not found, ensure the article id is correct' })
         }
         // TODO: check the the user ID to be sent in the body of the request
-        // TODO: remove the number casting
-        if (article.userId === Number(userId)) {
+        if (article.userId == userId) {
             if (req.files.length) {
                 const images = [];
                 const publicIds = [];
@@ -99,14 +98,28 @@ export const editArticle = async(req, res) => {
 // delete DONE:
 export const deleteArticle = async(req, res) => {
     try {
-        const article = await articleModel.findById(req.params.articleId);
+        const articleId = req.params.articleId;
+        const userId = req.body.userId;
+
+
+        const article = await articleModel.findById(articleId);
+
         if (!article) {
             res.status(400).json({ error: 'Article not found, ensure the article id is correct' })
         }
+
+        const user = await userModel.findById(userId);
+
+        if (!user) {
+            // bad request
+            res.status(400).json({ error: 'User not found, ensure the user id is correct' });
+        }
         // TODO: check the the user ID to be sent in the body of the request
-        if (article.userId === req.body.userId) {
-            // TODO: remove the article id from the user's articles list
+        if (article.userId == userId) {
+ 
+            await user.updateOne({ $pull: { articles: articleId } });
             await article.deleteOne();
+
             res.status(201).json({ message: 'Article deleted successfully' });
         }
         else {
@@ -119,7 +132,6 @@ export const deleteArticle = async(req, res) => {
 }
 
 // like DONE:
-// TODO: userId to prevint like and dislike from the same user on the same article
 // CHECK: need the user id, send it in the body or as param?
 export const likeArticle = async(req, res) => {
     const userId = req.body.userId;
@@ -209,13 +221,7 @@ export const reportArticle = async(req, res) => {
 // view article DONE:
 export const viewArticle = async(req, res) => {
     try {
-        const viewedArticle = await articleModel.findById(req.params.articleId).populate({ 
-            path: 'comments',
-            populate: {
-              path: 'replies',
-              model: 'Reply'
-            } 
-         });
+        const viewedArticle = await getArticle(req.params.articleId);
         if (!viewedArticle) {
             return res.status(400).json({ error: 'Article not found, ensure the article id is correct' });
         }
@@ -230,14 +236,14 @@ export const viewArticle = async(req, res) => {
 // TODO: check-> make priority for friends' articles
 export const viewArticles = async(req, res) => {
     try {
-        // TODO: populate with user
         const articles = await articleModel.find().populate({ 
             path: 'comments',
             populate: {
               path: 'replies',
               model: 'Reply'
             } 
-         }); 
+         })
+         .populate({ path: 'userId' }); 
         res.status(200).json(articles);
     }
     catch (error) {
@@ -245,4 +251,16 @@ export const viewArticles = async(req, res) => {
     }
 }
 
+export const getArticle = async (articleId) => {
+    const article = await articleModel.findById(articleId).populate({ 
+        path: 'comments',
+        populate: {
+          path: 'replies',
+          model: 'Reply'
+        } 
+     })
+    .populate({ path: 'userId' });
+
+    return article;
+}
 

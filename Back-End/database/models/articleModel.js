@@ -22,11 +22,10 @@ const numImagesValidator = {
 const articleSchema = new Schema ({
     userId: {
         // TODO: return this
-        // type: Types.ObjectId,
-        // ref: 'User',
-
-        type: Number,
-        required: true
+        type: Types.ObjectId,
+        ref: 'User',
+        // type: Number,
+        // required: true
     }
     ,
     content: {
@@ -66,29 +65,29 @@ const articleSchema = new Schema ({
     ,
     likedUsers: {
         // TODO:
-        // type: [Types.ObjectId],
-        // ref: 'User',
-        // default: []
-        type: [Number],
+        type: [Types.ObjectId],
+        ref: 'User',
         default: []
+        // type: [Number],
+        // default: []
     }
     ,
     dislikedUsers: {
         // TODO:
-        // type: [Types.ObjectId],
-        // ref: 'User',
-        // default: []
-        type: [Number],
+        type: [Types.ObjectId],
+        ref: 'User',
         default: []
+        // type: [Number],
+        // default: []
     }
     ,
     reportedUsers: {
         // TODO:
-        // type: [Types.ObjectId],
-        // ref: 'User',
-        // default: []
-        type: [Number],
+        type: [Types.ObjectId],
+        ref: 'User',
         default: []
+        // type: [Number],
+        // default: []
     }
     ,
     comments: {
