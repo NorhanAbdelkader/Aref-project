@@ -40,6 +40,11 @@ export const followUser = async (req, res) => {
         if (currentUser.followingList.includes(userId)) {
             res.status(400).json({ message: 'This user is already in your followingList list' });   
         }
+
+        if (user.blockList.includes(currUserId)) {
+            res.status(400).json({ message: 'You can not follow this user as you are in his block list' });   
+        }
+        
         else {
             await currentUser.updateOne({ $addToSet: { followingList: userId } });
     
@@ -110,7 +115,8 @@ export const blockUser = async (req, res) => {
         }
         else {
             await currentUser.updateOne({ $addToSet: { blockList: userId }, $pull: { followingList: userId } });
-            //TODO: if the user is following currentUser, remove him from his following list?
+            await user.updateOne({ $pull: { followingList: currUserId } });
+            
             res.status(201).json({ message: 'User blocked successfully' });
         }
     }
