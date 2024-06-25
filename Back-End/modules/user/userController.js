@@ -18,15 +18,14 @@ export const createUser = async (req, res) => {
 
 // request body -> has only the user's id (the friend to be added) and the current user (who made the request)
 // DONE:
-// make it follow instead of addFriend? to be one way -> (user follow other users but the other users don't have to follow him)
-export const addFriend = async (req, res) => {
+export const followUser = async (req, res) => {
     try {
         const { currUserId, userId } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }
         if (!userId) {
-            return res.status(400).json({ error: 'Friend user id required to be added' });
+            return res.status(400).json({ error: 'User id required to be added' });
         }
         const currentUser = await userModel.findById(currUserId);
         const user = await userModel.findById(userId);
@@ -35,33 +34,32 @@ export const addFriend = async (req, res) => {
             return res.status(400).json({ error: 'Current user not found' });
         }
         if (!user) {
-            return res.status(400).json({ error: 'Friend user to be added not found' });
+            return res.status(400).json({ error: 'User to be added not found' });
         }
         
-        if (currentUser.friends.includes(userId) && user.friends.includes(currUserId)) {
-            res.status(400).json({ message: 'User is already your friend' });   
+        if (currentUser.followingList.includes(userId)) {
+            res.status(400).json({ message: 'This user is already in your followingList list' });   
         }
         else {
-            await currentUser.updateOne({ $addToSet: { friends: userId } });
-            await user.updateOne({ $addToSet: { friends: currUserId } });
+            await currentUser.updateOne({ $addToSet: { followingList: userId } });
     
-            res.status(201).json({ message: 'User added as a friend successfully' });
+            res.status(201).json({ message: 'User followed successfully' });
         }
     }
     catch (error) {
         res.status(500).json(error);
     }
 }
-// unfriend user 
+// unfollow user 
 // DONE:
-export const unfriendUser = async (req, res) => {
+export const unfollowUser = async (req, res) => {
     try {
         const { currUserId, userId } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }
         if (!userId) {
-            return res.status(400).json({ error: 'Friend user id required to be removed' });
+            return res.status(400).json({ error: 'Followed user id required to be removed' });
         }
         const currentUser = await userModel.findById(currUserId);
         const user = await userModel.findById(userId);
@@ -70,17 +68,16 @@ export const unfriendUser = async (req, res) => {
             return res.status(400).json({ error: 'Current user not found' });
         }
         if (!user) {
-            return res.status(400).json({ error: 'Friend user to be removed not found' });
+            return res.status(400).json({ error: 'Followed user to be removed not found' });
         }
         
-        if (!currentUser.friends.includes(userId) && !user.friends.includes(currUserId)) {
-            res.status(400).json({ message: 'User is not your friend' });   
+        if (!currentUser.followingList.includes(userId)) {
+            res.status(400).json({ message: 'User is not in your followingList list' });   
         }
         else {
-            await currentUser.updateOne({ $pull: { friends: userId } });
-            await user.updateOne({ $pull: { friends: currUserId } });
+            await currentUser.updateOne({ $pull: { followingList: userId } });
     
-            res.status(201).json({ message: 'User removed from friends successfully' });
+            res.status(201).json({ message: 'User removed from followingList list successfully' });
         }
     }
     catch (error) {
@@ -112,9 +109,8 @@ export const blockUser = async (req, res) => {
             res.status(400).json({ message: 'User is already blocked' });   
         }
         else {
-            await currentUser.updateOne({ $addToSet: { blockList: userId }, $pull: { friends: userId } });
-            await user.updateOne({ $pull: { friends: currUserId } });
-    
+            await currentUser.updateOne({ $addToSet: { blockList: userId }, $pull: { followingList: userId } });
+            //TODO: if the user is following currentUser, remove him from his following list?
             res.status(201).json({ message: 'User blocked successfully' });
         }
     }
@@ -123,7 +119,7 @@ export const blockUser = async (req, res) => {
     }
 }
 
-// unblock user (if the user was friend don't return him as friend just remove from the block list)
+// unblock user
 // DONE:
 export const unblockUser = async (req, res) => {
     try {

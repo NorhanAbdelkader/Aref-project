@@ -42,7 +42,7 @@ const userSchema = new Schema(
             // Added
             enum: ['رواية', 'خيالي', 'علوم', 'واقعي', 'ديني', 'شعر'] 
         },
-        friends: [{
+        followingList: [{
             type: Types.ObjectId,
             ref: "User",
         }],

@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { addFriend, addInterest, blockUser, createUser, removeInterest, unblockUser, unfriendUser, viewUserArticles } from "./userController.js";
+import { addInterest, blockUser, createUser, followUser, removeInterest, unblockUser, unfollowUser, viewUserArticles } from "./userController.js";
 
 const router = Router();
 
-router.patch('/addFriend', addFriend);
-router.patch('/unfriendUser', unfriendUser);
+router.patch('/followUser', followUser);
+router.patch('/unfollowUser', unfollowUser);
 
 router.patch('/blockUser', blockUser);
 router.patch('/unblockUser', unblockUser);
