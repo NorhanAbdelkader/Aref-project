@@ -1,7 +1,7 @@
 
 import { useState,useRef,useEffect  } from "react";
-import { ProfileCard} from "../profileComponents/UserInfo";
-import {UserInformationAndArticles} from "../profileComponents/UserArticles";
+import { ProfileCard} from "../components/profileComponents/UserInfo";
+import {UserInformationAndArticles} from "../components/profileComponents/UserArticles";
 import Navbar from "../components/generalComponents/Navbar";
 
 
