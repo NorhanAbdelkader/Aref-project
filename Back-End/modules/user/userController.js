@@ -41,7 +41,11 @@ export const followUser = async (req, res) => {
             res.status(400).json({ message: 'This user is already in your followingList list' });   
         }
 
-        if (user.blockList.includes(currUserId)) {
+        else if (currentUser.blockList.includes(userId)) {
+            res.status(400).json({ message: 'You can not follow this user as you blocked him, unblock first to follow' });   
+        }
+
+        else if (user.blockList.includes(currUserId)) {
             res.status(400).json({ message: 'You can not follow this user as you are in his block list' });   
         }
         
