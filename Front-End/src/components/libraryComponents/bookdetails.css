@@ -1,0 +1,53 @@
+/***************BookDetails*********************/
+:root{
+  --color1: #FAF3E0;
+  --color2: #014D4E;
+  --color3: #007BA7;
+  --color4: #556B2F;
+  --color5: #800000;
+  --color6: #36454F;
+  --color7: #D4AF37;
+  }
+ 
+.book-details-container{
+    width: 80%;
+    min-height: 90%;
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    margin: 5%;
+    
+  }
+  .image-container{
+    display: flex;
+    background:linear-gradient(to left,Var(--color7),Var(--color1));
+    height: 800;
+    width:600 ;
+    justify-content: center;
+  }
+  .cover-image{
+    height: 80%;
+    width:40% ;
+    align-self: center;
+    border :1px;
+    border-radius: 0.3rem;
+    margin-top: 10%;
+  }
+  .split{
+    margin:10px  0 10px 0 ;
+  }
+  .text{
+    margin-bottom: 20px;
+  }
+  .Add-review{
+    height:50px;
+    width: 550px;
+    margin-bottom: 1%;
+    background-color: Var(--color3);
+    border: Var(--color3);
+  }
+  .book-details{
+    background:linear-gradient(to left,Var(--color7),Var(--color1));
+    margin: 0;
+  }
