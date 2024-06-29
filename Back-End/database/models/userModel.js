@@ -29,11 +29,9 @@ const userSchema = new Schema(
         },
         profilePhoto: {
             type: String,
-             
         },
         coverPhoto: {
             type: String,
-             
         },
         bio: {
             type: String,
@@ -43,7 +41,7 @@ const userSchema = new Schema(
             // Added
             enum: ['رواية', 'خيالي', 'علوم', 'واقعي', 'ديني', 'شعر'] 
         },
-        friends: [{
+        followingList: [{
             type: Types.ObjectId,
             ref: "User",
         }],
