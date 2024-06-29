@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../components/generalComponents/Navbar'
-import Sidebar from '../homeComponents/Sidebar'
+import Sidebar from '../components/homeComponents/Sidebar'
 
 const LibraryPage = () => {
   return (
