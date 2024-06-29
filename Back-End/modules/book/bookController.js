@@ -1,5 +1,5 @@
 import bookModel from "../../database/models/bookModel.js"
-import cloudinary from "../../service/cloudinary.js"
+import cloudinary from "../../services/cloudinary.js"
 
 export const addbook=async(req,res)=>{
     try {

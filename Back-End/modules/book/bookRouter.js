@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { addbook,allbooks,deletebook,filterbooks,getbook,rateBook,searchBooksByName,sortbooks,updatebook} from './bookController.js';
-import { myMulter ,validationTypes,HME } from '../../service/clodMulter.js';
+import { myMulter ,fileValidation,HME } from '../../services/multer.js';
 const router = Router();
 
 
 
 
-router.post("/",myMulter(validationTypes.iamge).single('image'),HME, addbook)
+router.post("/",myMulter(fileValidation.image).single('image'),HME, addbook)
 
 router.get("/", allbooks)
 
@@ -20,7 +20,7 @@ router.get("/:id", getbook)
 
 router.patch("/:id", rateBook)
 
-router.put("/:id",myMulter(validationTypes.iamge).single('image'),HME, updatebook)
+router.put("/:id",myMulter(fileValidation.image).single('image'),HME, updatebook)
 
 router.delete("/:id", deletebook)
 

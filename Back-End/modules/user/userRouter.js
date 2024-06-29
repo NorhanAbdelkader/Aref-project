@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { addInterest, blockUser, createUser, followUser, removeInterest, unblockUser, unfollowUser, viewUserArticles, editBio, editCoverPhoto, editProfilePhoto, editUserName, viewProfile } from "./userController.js";
-import { myMulter ,validationTypes,HME } from '../../service/clodMulter.js';
+import { myMulter ,fileValidation,HME } from '../../services/multer.js';
 
 const router = Router();
 
@@ -21,9 +21,9 @@ router.post('/createUser', createUser);
 
 
 router.patch('/:userId/name', editUserName);
-router.patch('/:userId/profilePhoto',myMulter(validationTypes.iamge).single('profile photo'),HME, editProfilePhoto);
+router.patch('/:userId/profilePhoto',myMulter(fileValidation.image).single('profile photo'),HME, editProfilePhoto);
 
-router.patch('/:userId/CoverPhoto',myMulter(validationTypes.iamge).single('cover photo'),HME, editCoverPhoto);
+router.patch('/:userId/CoverPhoto',myMulter(fileValidation.image).single('cover photo'),HME, editCoverPhoto);
 
 router.patch('/:userId/Bio', editBio);
 

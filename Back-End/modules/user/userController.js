@@ -1,6 +1,6 @@
 import userModel from "../../database/models/userModel.js";
 import { getArticle } from "../article/articleController.js";
-import cloudinary from "../../service/cloudinary.js";
+import cloudinary from "../../services/cloudinary.js";
 
 // TODO: delete this
 export const createUser = async (req, res) => {
