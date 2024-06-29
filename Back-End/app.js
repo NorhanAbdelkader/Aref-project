@@ -1,63 +1,36 @@
-require('dotenv').config();
-const express =require("express");
-//import express from 'express'
-//import mongoose from 'mongoose'
-//import User from "./database/models/userModel.js"
-//const User =require("./database/models/userModel.js");
-const connectDB =require("./database/connection.js");
-const userRoutes = require('./modules/user/userRouter');
+import path from 'path'
+import { fileURLToPath } from 'url'
+import dotenv from 'dotenv'
+
+import connectDB from './database/connection.js';
+import express from 'express';
+
+import commetnRouter from './modules/comment/commentRouter.js';
+import articleRouter from './modules/article/articleRouter.js';
+import replyRouter from './modules/reply/replyRouter.js';
+import userRouter from './modules/user/userRouter.js';
+import  bookRouter from './modules/book/bookRouter.js'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+dotenv.config({ path: path.join(__dirname, '/config/.env') })
+
+console.log('PORT:', process.env.PORT);
+
 const app = express();
-const PORT = process.env.PORT || 3000;
-// Connect to MongoDB
-connectDB();
 app.use(express.json());
-// Define authentication routes
-app.use('/', userRoutes);
-// Start the server
-app.listen(process.env.PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
-//server.timeout = 5000; // 5 seconds
-//app.use("api/auth",authPath)
-/** 
-app.post('/register',async (req,res)=>{
-    try{
-        //const{email,password}= req.body
-      const{email,password}= req.body
-       const findUser = users.find((data)=>email==data.email)
-        if(findUser){
-            res.status(400).send("Wrong email or password")
-              }
-        const hashedPassword = await bcrypt.hash(password,10)
-        users.push({email:email,password:hashedPassword});
-        res.send("Registered successfully",req.body)
-        
-    }catch(error){
-        res.send({message:error.message})
-    }
-})
-*/
-/** 
-app.use(function(req, res, next) {
-    if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-      jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
-        if (err) req.user = undefined;
-        req.user = decode;
-        next();
-      });
-    } else {
-      req.user = undefined;
-      next();
-    }
-  });
-  var routes = require('./routes/userRouter');
-  routes(app);
-  
-  app.use(function(req, res) {
-    res.status(404).send({ url: req.originalUrl + ' not found' })
-  });
-  
-app.listen(port,()=>{
-    console.log("Server started on port 3000")
-})
-*/
+
+
+const port = 3000
+const baseUrl = '/api'
+
+app.use(`${baseUrl}/book`, bookRouter)
+app.use(`${baseUrl}/user`, userRouter)
+app.use(`${baseUrl}/article`, articleRouter);
+app.use(`${baseUrl}/comment`, commetnRouter);
+app.use(`${baseUrl}/reply`, replyRouter);
+app.use(`${baseUrl}/user`, userRouter);
+
+connectDB();
+
+app.listen(3000, () => { console.log("Server running") });
+
