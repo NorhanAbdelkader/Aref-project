@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import CreateArticle from "../homeComponents/CreateArticle";
-import Article from "../homeComponents/Article";
+import CreateArticle from "../components/homeComponents/CreateArticle";
+import Article from "../components/homeComponents/Article";
 import './Homepage.css';
 import Navbar from "../components/generalComponents/Navbar";
-import Sidebar from "../homeComponents/Sidebar";
+import Sidebar from "../components/homeComponents/Sidebar";
 
 
 function HomePage() {

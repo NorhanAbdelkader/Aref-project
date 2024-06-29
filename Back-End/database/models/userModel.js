@@ -22,17 +22,16 @@ const userSchema = new Schema(
             type: String,
             required: [true, "يجب ادخال كلمة المرور"],
         },
-        isAdmin: {
-            type: Boolean,
-            default: false,
+        role: {
+            type: String,
+            default: 'User',
+            enum: ['User', 'Admin']
         },
         profilePhoto: {
-            data: Buffer,
-            contentType: String
+            type: String,
         },
         coverPhoto: {
-            data: Buffer,
-            contentType: String,
+            type: String,
         },
         bio: {
             type: String,
