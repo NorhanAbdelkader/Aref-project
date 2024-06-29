@@ -33,3 +33,4 @@ app.use(`${baseUrl}/user`, userRouter);
 connectDB();
 
 app.listen(3000, () => { console.log("Server running") });
+

@@ -1,0 +1,80 @@
+/***************BookCard*********************/
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    margin-top: 4%;
+    background: linear-gradient(to right,Var(--color1),rgb(246, 241, 193));
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card:hover {
+    transform: scale(1.07);
+    
+  }
+ .card-division{ 
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0;
+  }
+  .card-small-division{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: auto;
+    margin: auto;
+    margin-right: 0;
+    margin-top: 0;
+  }
+  .card-image{
+    position: relative;
+    display: flex;
+     margin: 5px;
+    height: 80%;
+    width: 30%;
+    max-width: 200;
+    display: block;
+    padding: 0;
+    border-radius: 0.25rem;  
+}
+.card .card-title{
+  display: flex;
+  padding: 20px;
+    font-size:98% ;
+    font-family: Arial;
+    margin: left;
+    color: Var(--color6);
+}
+hr{
+  border:0px;
+  border-top: 1px solid rgba(219, 218, 219, 0.507);
+ margin: 0;
+}
+.card-icon{
+display: flex;
+margin: auto;
+}
+.star-rating{
+  display: flex;
+  padding: 20px 20px;
+}
+.rating{
+  display: flex;
+  padding: 20px 20px;
+}
+.reviews{
+  display: flex; 
+  padding: 20px 20px;
+}
+.card_text{
+  color: Var(--color6);
+}
+/**
+.price{
+  color: rgb(177, 119, 33);
+  display:flex;
+  align-self: flex-end;
+  
+}**/
