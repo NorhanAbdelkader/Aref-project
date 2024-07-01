@@ -4,6 +4,7 @@ import { FaUserLarge } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa";
 import { validateEmail, validatePasswoed } from "./utils";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/AuthProvider";
 
 function Authentication(props) {
     const [isLogin, setIsLogin] = useState(props.signIn);
@@ -14,6 +15,7 @@ function Authentication(props) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const auth = useAuth();
 
     const switchForm = () => {
         setIsLogin(!isLogin);
@@ -47,13 +49,13 @@ function Authentication(props) {
     };
 
     const handleSubmit = async (e) => {
-
+        
         e.preventDefault();
         // TODO: navigate to the home page
         if (isLogin) {
             const data = { email, password };
 
-            let response = await fetch('http://localhost:3000/api/user/login',
+            let response = await fetch('http://localhost:5000/api/user/login',
                 {
                     method: 'post',
                     body: JSON.stringify(data),
@@ -63,10 +65,11 @@ function Authentication(props) {
                 }
             );
             response = await response.json();
-
+            auth.getUser(response);
         } else {
+            // TODO: navigate to signin
             const data = { firstName, lastName, email, password };
-            let response = await fetch('http://localhost:3000/api/user/register',
+            let response = await fetch('http://localhost:5000/api/user/register',
                 {
                     method: 'post',
                     body: JSON.stringify(data),
@@ -76,7 +79,7 @@ function Authentication(props) {
                 }
             );
             response = await response.json();
-
+            // auth.getUser(response);
         }
         clearForm();
     };

@@ -5,9 +5,11 @@ import { FaHome } from "react-icons/fa";
 import { IoLibrary } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import { BiSolidUserCircle } from "react-icons/bi";
+import { useAuth } from "../../hooks/AuthProvider";
 
 function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const auth = useAuth();
 
     //TODO:
     const handleLogin = () => {
@@ -16,6 +18,7 @@ function Navbar() {
 
     const handleLogout = () => {
         setIsLoggedIn(false);
+        auth.logOut();
         console.log("Logged out!!!");
     };
 

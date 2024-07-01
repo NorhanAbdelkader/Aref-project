@@ -15,8 +15,7 @@ export function validateRegisterUser(obj) {
 
         email: Joi.string().trim().email().min(10).max(100).required(),
         password: Joi.string().trim().min(6).max(100).required(),
-        role: Joi.string().required()
-        // isAdmin: Joi.boolean() // Use .boolean() instead of .bool()
+
     });
 
     return schema.validate(obj);

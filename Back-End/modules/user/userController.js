@@ -23,7 +23,6 @@ export const register = async (req, res) => {
         },
         email: req.body.email,
         password: req.body.password,
-        role:req.body.role
 
     });
 
@@ -32,7 +31,7 @@ export const register = async (req, res) => {
         await user.save();
         // const token = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
         // res.header('auth-token', token).send(user)
-        res.status(201).json({ message: 'User registered successfully' });
+        res.status(201).json({ message: 'User registered successfully', user });
     } catch (error) {
         res.status(500).json({ message: 'Failed to register user', error: error.message });
     }
@@ -48,12 +47,13 @@ export const login = async (req, res) => {
     if (!user) {
         return res.status(404).send("Invalid email ");
     }
-    const checkPassword = await bcrypt.compare(req.body.password, user.password)
+    const checkPassword = bcrypt.compare(req.body.password, user.password)
     if (!checkPassword) {
         return res.status(404).send("Invalid  password");
     }
-    const  accesstoken = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
-    return res.status(200).json( { message:" done", accesstoken } );
+    const  accesstoken = jwt.sign({ _id: user._id, role: user.role }, "privateKey");
+    return res.status(200).json( { message:" done", accesstoken, user } );
+
 };
 
 // request body -> has only the user's id (the friend to be added) and the current user (who made the request)
