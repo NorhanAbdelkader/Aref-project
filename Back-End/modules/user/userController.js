@@ -60,7 +60,8 @@ export const login = async (req, res) => {
 // DONE:
 export const followUser = async (req, res) => {
     try {
-        const { currUserId, userId } = req.body;
+        const currUserId  = req.user._id;
+        const { userId } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }
@@ -103,7 +104,8 @@ export const followUser = async (req, res) => {
 // DONE:
 export const unfollowUser = async (req, res) => {
     try {
-        const { currUserId, userId } = req.body;
+        const currUserId  = req.user._id;
+        const { userId } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }
@@ -137,7 +139,8 @@ export const unfollowUser = async (req, res) => {
 // DONE:
 export const blockUser = async (req, res) => {
     try {
-        const { currUserId, userId } = req.body;
+        const currUserId  = req.user._id;
+        const { userId } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }
@@ -173,7 +176,8 @@ export const blockUser = async (req, res) => {
 // DONE:
 export const unblockUser = async (req, res) => {
     try {
-        const { currUserId, userId } = req.body;
+        const currUserId  = req.user._id;
+        const { userId } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }
@@ -207,7 +211,8 @@ export const unblockUser = async (req, res) => {
 // DONE:
 export const addInterest = async (req, res) => {
     try {
-        const { currUserId, interest } = req.body;
+        const currUserId  = req.user._id;
+        const { interest } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }
@@ -237,7 +242,8 @@ export const addInterest = async (req, res) => {
 // DONE:
 export const removeInterest = async (req, res) => {
     try {
-        const { currUserId, interest } = req.body;
+        const currUserId  = req.user._id;
+        const { interest } = req.body;
         if (!currUserId) {
             return res.status(400).json({ error: 'Current user id required' });
         }

@@ -3,7 +3,7 @@ import "./Authentication.css";
 import { FaUserLarge } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa";
 import { validateEmail, validatePasswoed } from "./utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthProvider";
 
 function Authentication(props) {
@@ -16,6 +16,7 @@ function Authentication(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const auth = useAuth();
+    const navigate = useNavigate();
 
     const switchForm = () => {
         setIsLogin(!isLogin);
@@ -51,7 +52,6 @@ function Authentication(props) {
     const handleSubmit = async (e) => {
         
         e.preventDefault();
-        // TODO: navigate to the home page
         if (isLogin) {
             const data = { email, password };
 
@@ -67,7 +67,7 @@ function Authentication(props) {
             response = await response.json();
             auth.getUser(response);
         } else {
-            // TODO: navigate to signin
+
             const data = { firstName, lastName, email, password };
             let response = await fetch('http://localhost:5000/api/user/register',
                 {
@@ -79,7 +79,9 @@ function Authentication(props) {
                 }
             );
             response = await response.json();
-            // auth.getUser(response);
+            console.log(`Response: ${response}`);
+            setIsLogin(true);
+            navigate("/signIn");
         }
         clearForm();
     };

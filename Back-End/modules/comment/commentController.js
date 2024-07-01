@@ -63,7 +63,7 @@ export const editComment = async(req, res) => {
         if (!comment) {
             res.status(400).json({ error: 'Comment not found, ensure the comment id is correct' });
         }
-        if (comment.userId === req.body.userId) {
+        if (comment.userId === req.user._id) {
             await comment.updateOne({ content: req.body.content });
             res.status(201).json({ message: 'Comment edited successfully' });
         }
@@ -84,8 +84,8 @@ export const deleteComment = async(req, res) => {
         if (!comment) {
             res.status(400).json({ error: 'Comment not found, ensure the comment id is correct' })
         }
-        // TODO: check the the user ID to be sent in the body of the request
-        if (comment.userId === req.body.userId) {
+        // DONE: check the the user ID to be sent in the body of the request
+        if (comment.userId === req.user._id) {
             
             const article = await articleModel.findById(comment.articleId);
 
