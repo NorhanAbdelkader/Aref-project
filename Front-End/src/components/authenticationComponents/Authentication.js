@@ -46,15 +46,37 @@ function Authentication(props) {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
-        // TODO: Submit the form and navigate to the home page
+        // TODO: navigate to the home page
         if (isLogin) {
             const data = { email, password };
-            console.log('Logging in with', data);
+
+            let response = await fetch('http://localhost:3000/api/user/login',
+                {
+                    method: 'post',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            response = await response.json();
+
         } else {
             const data = { firstName, lastName, email, password };
-            console.log('Registering in with', data);
+            let response = await fetch('http://localhost:3000/api/user/register',
+                {
+                    method: 'post',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            response = await response.json();
+
         }
         clearForm();
     };
@@ -99,16 +121,16 @@ function Authentication(props) {
 
                     <div className="switch-form" onClick={switchForm}>
 
-                    {!isLogin && (
-                        <Link to="/signIn">
-                        لديك بالفعل حساب؟ سجل الدخول الي حسابك
-                        </Link>
-                    )}
-                    {isLogin && (
-                        <Link to="/signUp">
-                            ليس لديك حساب؟ إنشاء حساب
-                        </Link>
-                    )}
+                        {!isLogin && (
+                            <Link to="/signIn">
+                                لديك بالفعل حساب؟ سجل الدخول الي حسابك
+                            </Link>
+                        )}
+                        {isLogin && (
+                            <Link to="/signUp">
+                                ليس لديك حساب؟ إنشاء حساب
+                            </Link>
+                        )}
                         {/* {isLogin ? "ليس لديك حساب؟ إنشاء حساب جديد" : 'لديك بالفعل حساب؟ سجل الدخول الي حسابك'} */}
                     </div>
 
