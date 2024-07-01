@@ -6,13 +6,37 @@ import Navbar from "../components/generalComponents/Navbar";
 import Sidebar from "../components/homeComponents/Sidebar";
 
 
+
 function HomePage() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch(`/posts.json`)
-      .then((response) => response.json())
-      .then((data) => setPosts(data))
-      .catch((error) => console.log(error));
+    const token = localStorage.getItem('auth-token');
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/article/viewArticles', {
+          method: 'GET', // or 'POST' if you need to send data
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token, // Replace `your-token-here` with your actual token
+          },
+        });
+        if (!token) {
+          throw new Error('No auth token found in localStorage');
+        } 
+        
+        if (!response.ok) {
+          console.log(response)
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
 
@@ -25,8 +49,9 @@ function HomePage() {
         <CreateArticle className='create'/>
         <div>
           {posts.map(post => (
-            <Article key={post.id} id={post.id} name={post.username} content={post.content}
-              profilePhoto={post.profilePhoto} images={post.images} numLikes={post.numLikes} comments={post.comments} />
+            <Article key={post.id} id={post._id} name={post.userId.name.firstName} content={post.content}
+              profilePhoto={post.userId.profilePhoto} images={post.images} numLikes={post.likesNum}
+               numComments={post.commentsNum}comments={post.comments} />
           ))}
         </div>
 
