@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import userModel from '../../database/models/userModel.js';
-import { validateRegisterUser, validateLoginUser } from "../../database/models/userModel.js";
+import { validateRegisterUser, validateLoginUser } from "./userValidation.js";
 import { getArticle } from "../article/articleController.js";
 import cloudinary from "../../services/cloudinary.js";
-import { validateRegisterUser } from './userValidation.js';
+
 
 //register
 export const register = async (req, res) => {
@@ -23,14 +23,15 @@ export const register = async (req, res) => {
         },
         email: req.body.email,
         password: req.body.password,
+        role:req.body.role
 
     });
 
     try {
-        user.password = await bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
         await user.save();
-        const token = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
-        res.header('auth-token', token).send(user)
+        // const token = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
+        // res.header('auth-token', token).send(user)
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Failed to register user', error: error.message });
@@ -45,14 +46,14 @@ export const login = async (req, res) => {
     }
     let user = await userModel.findOne({ email: req.body.email })
     if (!user) {
-        return res.status(404).send("Invalid email or password");
+        return res.status(404).send("Invalid email ");
     }
     const checkPassword = await bcrypt.compare(req.body.password, user.password)
     if (!checkPassword) {
-        return res.status(404).send("Invalid email or password");
+        return res.status(404).send("Invalid  password");
     }
-    const token = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
-    return res.status(200).json( { message:" done", acetokensstoken } );
+    const  accesstoken = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
+    return res.status(200).json( { message:" done", accesstoken } );
 };
 
 // request body -> has only the user's id (the friend to be added) and the current user (who made the request)
@@ -295,7 +296,8 @@ export const viewUserArticles = async (req, res) => {
 
 export const editUserName = async (req, res) => {
     try {
-        const { userId } = req.params
+        const userId  = req.user._id;
+
         const { lastName, firstName } = req.body
 
         const user = await userModel.findById(userId)
@@ -311,7 +313,8 @@ export const editUserName = async (req, res) => {
 }
 export const editBio = async (req, res) => {
     try {
-        const { userId } = req.params
+        const userId  = req.user._id;
+
         const { bio } = req.body
 
         const user = await userModel.findById(userId)
@@ -328,7 +331,8 @@ export const editBio = async (req, res) => {
 export const editProfilePhoto = async (req, res) => {
 
     try {
-        const { userId } = req.params;
+        const userId  = req.user._id;
+
 
         if (!req.file) {
             return res.status(400).json({ message: 'Please upload a photo.' });
@@ -355,7 +359,7 @@ export const editProfilePhoto = async (req, res) => {
 };
 export const editCoverPhoto = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const userId  = req.user._id;
 
         if (!req.file) {
             return res.status(400).json({ message: 'Please upload a photo.' });
@@ -383,14 +387,17 @@ export const editCoverPhoto = async (req, res) => {
 }
 export const viewProfile = async (req, res) => {
     try {
-        const { userId } = req.params
+        let { userId } = req.params
+        if(!userId){
+            userId=req.user._id;
+        }
 
         const user = await userModel.findById(userId).select("-articles")
 
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
-
+          console.log(user)
         res.json({ message: "done", user })
     } catch (error) {
         res.json({ message: "catch error", error })

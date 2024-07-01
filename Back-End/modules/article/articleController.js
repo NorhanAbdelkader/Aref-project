@@ -134,8 +134,9 @@ export const deleteArticle = async(req, res) => {
 // like DONE:
 // CHECK: need the user id, send it in the body or as param?
 export const likeArticle = async(req, res) => {
-    const userId = req.body.userId;
+    const userId = req.user._id;
     const articleId = req.params.articleId;
+    console.log(articleId)
 
     try {
         const article = await articleModel.findById(articleId);
@@ -236,14 +237,25 @@ export const viewArticle = async(req, res) => {
 // TODO: check-> make priority for friends' articles
 export const viewArticles = async(req, res) => {
     try {
-        const articles = await articleModel.find().populate({ 
+        const articles = await articleModel.find().populate({
             path: 'comments',
-            populate: {
-              path: 'replies',
-              model: 'Reply'
-            } 
-         })
-         .populate({ path: 'userId' }); 
+           
+            populate: [
+              {
+                path: 'replies',
+                populate: { path: 'userId',select:'name profilePhoto'  } // Populate userId inside replies
+              },
+              {
+                path: 'userId',
+                select:'name profilePhoto' // Populate userId inside comments
+              }
+            ],
+            select:'-articleId' 
+          })
+          .populate({ path: 'userId',
+            select:'name profilePhoto' 
+           });
+        console.log(articles)
         res.status(200).json(articles);
     }
     catch (error) {

@@ -17,26 +17,29 @@ const userSchema = new Schema(
             type: String,
             required: [true, "يجب ادخال البريد الإلكتروني"],
             unique: [true, "البريد الإلكتروني مُسجل به مُسبقًا"],
-            match: [/.+\@.+\..+/, "من فضلك أدخل بريد إلكتروني صحيح"],
+            // match: [/.+\@.+\..+/, "من فضلك أدخل بريد إلكتروني صحيح"],
         },
         password: {
             type: String,
             required: [true, "يجب ادخال كلمة المرور"],
         },
         verified:{
-            type:boolean,
+            type:Boolean,
             default:false
         },
         role: {
             type: String,
+            required: [true,"Role is required"],
             default: 'User',
             enum: ['User', 'Admin']
         },
         profilePhoto: {
             type: String,
+            default:"https://res.cloudinary.com/dfvv2i9vk/image/upload/v1719747384/profile_photo_iw5kfx.jpg"
         },
         coverPhoto: {
             type: String,
+            default:"https://res.cloudinary.com/dfvv2i9vk/image/upload/v1719747656/cover_uhhwks.jpg"
         },
         bio: {
             type: String,

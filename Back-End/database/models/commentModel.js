@@ -14,10 +14,8 @@ const commentSchema = new Schema({
     ,
     userId: {
         // TODO: return this
-        // type: Types.ObjectId,
-        // ref: 'User',
-
-        type: Number,
+        type: Types.ObjectId,
+        ref: 'User',
         required: true
     }
     ,

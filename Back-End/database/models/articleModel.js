@@ -63,6 +63,11 @@ const articleSchema = new Schema ({
         min: 0
     }
     ,
+    commentsNum: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
     likedUsers: {
         // TODO:
         type: [Types.ObjectId],

@@ -4,7 +4,10 @@ import commentModel from "../../database/models/commentModel.js";
 // content, articleId, userId, replies
 // add DONE:
 export const addComment = async(req, res) => {
-    const {articleId, content, userId} = req.body;
+    const {articleId, content} = req.body;
+    const userId  = req.user._id;
+
+    
     
     if (!content) {
         return res.status(400).json({ error: 'Content is required' });
@@ -15,6 +18,9 @@ export const addComment = async(req, res) => {
     if (!articleId) {
         return res.status(400).json({ error: 'articleId is required' });
     }
+
+
+
     
     // TODO: Check if the userId exists
     // const user = await userModel.findById(userId);
@@ -33,10 +39,14 @@ export const addComment = async(req, res) => {
             res.status(400).json({ error: 'Article not found, ensure the article id is correct' })
         }
         
-        const newComment = new commentModel(req.body);
+        const newComment = new commentModel({articleId:articleId,content:content,userId:userId});
         const savedComment = await newComment.save();
 
-        await article.updateOne({$addToSet: { comments: savedComment._id }});
+        await article.updateOne({
+            $addToSet: { comments: savedComment._id },
+            $inc: { commentsNum: 1 }
+          });
+          console.log(savedComment)
 
         res.status(201).json(savedComment);
     } 
