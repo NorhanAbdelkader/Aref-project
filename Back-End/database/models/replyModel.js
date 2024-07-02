@@ -3,11 +3,8 @@ import { arabicTextValidator } from './articleModel.js';
 
 const replySchema = Schema({
     userId: {
-        // TODO: return
-        // type: Types.ObjectId,
-        // ref: 'User',
-
-        type: Number,
+        type: Types.ObjectId,
+        ref: 'User',
         required: true
     }
     ,

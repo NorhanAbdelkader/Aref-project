@@ -5,26 +5,15 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const token = localStorage.getItem('auth-token');
-//   const [token, setToken] = useState(localStorage.getItem("auth-token") || "");
-//   const navigate = useNavigate();
-  const getUser = async () => {
+  const token = localStorage.getItem("auth-token");
+  const navigate = useNavigate();
+  const getUser = async (res) => {
     try {
-      const response = await fetch("http://localhost:5000/api/user/profile", {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token, // Replace `your-token-here` with your actual token
-          },
-        // body: JSON.stringify(data),
-      });
-      const res = await response.json();
       if (res.user) {
         setUser(res.user);
-        console.log(res.user)
-        // setToken(res.token);
-        // localStorage.setItem("auth-token", res.token);
-        // navigate("/dashboard");
+        console.log(res.user);
+        localStorage.setItem("auth-token", res.accesstoken);
+        navigate("/home");
         return res.user;
       }
       throw new Error(res.message);
@@ -33,15 +22,14 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-//   const logOut = () => {
-//     setUser(null);
-//     setToken("");
-//     localStorage.removeItem("site");
-//     navigate("/login");
-//   };
+  const logOut = () => {
+    setUser(null);
+    localStorage.removeItem("auth-token");
+    navigate("/");
+  };
 
   return (
-    <AuthContext.Provider value={{  user, getUser }}>
+    <AuthContext.Provider value={{  user, getUser, logOut }}>
       {children}
     </AuthContext.Provider>
   );

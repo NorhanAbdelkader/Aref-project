@@ -10,7 +10,8 @@ import Sidebar from "../components/homeComponents/Sidebar";
 function HomePage() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    const token = localStorage.getItem('auth-token');
+    const token = localStorage.getItem("auth-token");
+
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:5000/api/article/viewArticles', {

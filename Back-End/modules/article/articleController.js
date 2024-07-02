@@ -6,7 +6,9 @@ import cloudinary from "../../services/cloudinary.js";
 
 // create DONE:
 export const createArticle = async(req, res) => {
-    const {userId, content} = req.body;
+    const userId  = req.user._id;
+
+    const { content } = req.body;
     
     if (!content) {
         return res.status(400).json({ error: 'Content is required' });
@@ -31,8 +33,9 @@ export const createArticle = async(req, res) => {
         publicIds.push(public_id);
 
     }
-    req.body.images = images
-    req.body.publicImagesId = publicIds
+    req.body.userId = userId;
+    req.body.images = images;
+    req.body.publicImagesId = publicIds;
 
     try
     {
@@ -50,13 +53,13 @@ export const createArticle = async(req, res) => {
 // edit DONE:
 export const editArticle = async(req, res) => {
     try {
-        const {userId, content} = req.body;
+        const userId  = req.user._id;
+        const { content } = req.body;
         const article = await articleModel.findById(req.params.articleId);
 
         if (!article) {
             res.status(400).json({ error: 'Article not found, ensure the article id is correct' })
         }
-        // TODO: check the the user ID to be sent in the body of the request
         if (article.userId == userId) {
             if (req.files.length) {
                 const images = [];
@@ -99,8 +102,7 @@ export const editArticle = async(req, res) => {
 export const deleteArticle = async(req, res) => {
     try {
         const articleId = req.params.articleId;
-        const userId = req.body.userId;
-
+        const userId = req.user._id;
 
         const article = await articleModel.findById(articleId);
 
@@ -114,7 +116,7 @@ export const deleteArticle = async(req, res) => {
             // bad request
             res.status(400).json({ error: 'User not found, ensure the user id is correct' });
         }
-        // TODO: check the the user ID to be sent in the body of the request
+        // DONE: check the the user ID to be sent in the body of the request
         if (article.userId == userId) {
  
             await user.updateOne({ $pull: { articles: articleId } });
@@ -164,7 +166,7 @@ export const likeArticle = async(req, res) => {
 
 // dislike DONE:
 export const dislikeArticle = async(req, res) => {
-    const userId = req.body.userId;
+    const userId  = req.user._id;
     const articleId = req.params.articleId;
 
     try {
@@ -193,7 +195,7 @@ export const dislikeArticle = async(req, res) => {
 
 // report DONE:
 export const reportArticle = async(req, res) => {
-    const userId = req.body.userId;
+    const userId  = req.user._id;
     const articleId = req.params.articleId;
 
     try {

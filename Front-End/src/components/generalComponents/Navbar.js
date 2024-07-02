@@ -1,22 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Navbar.css";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { IoLibrary } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import { BiSolidUserCircle } from "react-icons/bi";
+import { useAuth } from "../../hooks/AuthProvider";
 
 function Navbar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState();
+    const auth = useAuth();
 
-    //TODO:
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-    };
+    useEffect(() => {
+        const token = localStorage.getItem('auth-token');      
+        if (token) {
+            setIsLoggedIn(true);
+        }
+      }, []);
 
     const handleLogout = () => {
         setIsLoggedIn(false);
-        console.log("Logged out!!!");
+        auth.logOut();
     };
 
     return (

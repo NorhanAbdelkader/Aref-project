@@ -5,7 +5,8 @@ import replyModel from "../../database/models/replyModel.js";
 // TODO: Check reply
 
 export const replyOnComment = async(req, res) => {
-    const {content, userId} = req.body;
+    const userId  = req.user._id;
+    const { content } = req.body;
     const commentId = req.params.commentId;
 
     if (!content) {
@@ -15,13 +16,10 @@ export const replyOnComment = async(req, res) => {
         return res.status(400).json({ error: 'userId is required' });
     }
 
-    // TODO: Check if the userId exists
-    // const user = await userModel.findById(userId);
-
-    // if (!user) {
-    //     // bad request
-    //     res.status(400).json({ error: 'User not found, ensure the user id is correct' })'
-    // }
+    const user = await userModel.findById(userId);
+    if (!user) {
+        res.status(400).json({ error: 'User not found, ensure the user id is correct' });
+    }
 
     try {
         const comment = await commentModel.findById(commentId);
@@ -46,7 +44,7 @@ export const editReply = async(req, res) => {
         if (!reply) {
             res.status(400).json({ error: 'Reply not found, ensure the reply id is correct' });
         }
-        if (reply.userId === req.body.userId) {
+        if (reply.userId === req.user._id) {
             await reply.updateOne({ content: req.body.content });
             res.status(201).json({ message: 'Reply edited successfully' });
         }
@@ -66,8 +64,8 @@ export const deleteReply = async(req, res) => {
         if (!reply) {
             res.status(400).json({ error: 'Reply not found, ensure the reply id is correct' })
         }
-        // TODO: check the the user ID to be sent in the body of the request
-        if (reply.userId === req.body.userId) {
+        // DONE: check the the user ID to be sent in the body of the request
+        if (reply.userId === req.user._id) {
             
             const comment = await commentModel.findById(reply.commentId);
 

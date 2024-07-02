@@ -3,7 +3,8 @@ import "./Authentication.css";
 import { FaUserLarge } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa";
 import { validateEmail, validatePasswoed } from "./utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/AuthProvider";
 
 function Authentication(props) {
     const [isLogin, setIsLogin] = useState(props.signIn);
@@ -14,6 +15,8 @@ function Authentication(props) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const auth = useAuth();
+    const navigate = useNavigate();
 
     const switchForm = () => {
         setIsLogin(!isLogin);
@@ -46,15 +49,39 @@ function Authentication(props) {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        
         e.preventDefault();
-        // TODO: Submit the form and navigate to the home page
         if (isLogin) {
             const data = { email, password };
-            console.log('Logging in with', data);
+
+            let response = await fetch('http://localhost:5000/api/user/login',
+                {
+                    method: 'post',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            response = await response.json();
+            auth.getUser(response);
         } else {
+
             const data = { firstName, lastName, email, password };
-            console.log('Registering in with', data);
+            let response = await fetch('http://localhost:5000/api/user/register',
+                {
+                    method: 'post',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            response = await response.json();
+            console.log(`Response: ${response}`);
+            setIsLogin(true);
+            navigate("/signIn");
         }
         clearForm();
     };
@@ -99,16 +126,16 @@ function Authentication(props) {
 
                     <div className="switch-form" onClick={switchForm}>
 
-                    {!isLogin && (
-                        <Link to="/signIn">
-                        لديك بالفعل حساب؟ سجل الدخول الي حسابك
-                        </Link>
-                    )}
-                    {isLogin && (
-                        <Link to="/signUp">
-                            ليس لديك حساب؟ إنشاء حساب
-                        </Link>
-                    )}
+                        {!isLogin && (
+                            <Link to="/signIn">
+                                لديك بالفعل حساب؟ سجل الدخول الي حسابك
+                            </Link>
+                        )}
+                        {isLogin && (
+                            <Link to="/signUp">
+                                ليس لديك حساب؟ إنشاء حساب
+                            </Link>
+                        )}
                         {/* {isLogin ? "ليس لديك حساب؟ إنشاء حساب جديد" : 'لديك بالفعل حساب؟ سجل الدخول الي حسابك'} */}
                     </div>
 
