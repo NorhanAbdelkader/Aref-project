@@ -67,7 +67,9 @@ export const login = async (req, res) => {
     if (!user) {
         return res.status(404).send("Invalid email ");
     }
+
     const checkPassword = bcrypt.compare(req.body.password, user.password)
+
     if (!checkPassword) {
         return res.status(404).send("Invalid  password");
     }
@@ -306,8 +308,8 @@ export const removeInterest = async (req, res) => {
 // DONE:
 export const viewUserArticles = async (req, res) => {
     try {
-        const userId = req.params.userId;
-        const user = await userModel.findById(userId);
+
+        const user = await userModel.findById(req.params.userId);
 
         if (!user) {
             return res.status(400).json({ error: 'User not found' });
@@ -355,7 +357,8 @@ export const editBio = async (req, res) => {
         const userId  = req.user._id;
 
         const { bio } = req.body
-
+           
+        console.log(bio)
         const user = await userModel.findById(userId)
         if (!user) {
             res.json({ message: "user not found" })

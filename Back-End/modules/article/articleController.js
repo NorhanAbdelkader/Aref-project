@@ -25,7 +25,7 @@ export const createArticle = async(req, res) => {
     const publicIds = [];
 
     for(const file of req.files){
-
+       
         const { secure_url, public_id } = await cloudinary.uploader.upload(file.path, {
                 folder: 'Aref/article'
             })
@@ -257,7 +257,7 @@ export const viewArticles = async(req, res) => {
           .populate({ path: 'userId',
             select:'name profilePhoto' 
            });
-        console.log(articles)
+        
         res.status(200).json(articles);
     }
     catch (error) {
@@ -266,14 +266,24 @@ export const viewArticles = async(req, res) => {
 }
 
 export const getArticle = async (articleId) => {
-    const article = await articleModel.findById(articleId).populate({ 
+    const article = await articleModel.findById(articleId).populate({
         path: 'comments',
-        populate: {
-          path: 'replies',
-          model: 'Reply'
-        } 
-     })
-    .populate({ path: 'userId' });
+       
+        populate: [
+          {
+            path: 'replies',
+            populate: { path: 'userId',select:'name profilePhoto'  } // Populate userId inside replies
+          },
+          {
+            path: 'userId',
+            select:'name profilePhoto' // Populate userId inside comments
+          }
+        ],
+        select:'-articleId' 
+      })
+      .populate({ path: 'userId',
+        select:'name profilePhoto' 
+       });
 
     return article;
 }

@@ -30,11 +30,10 @@
 
 h1 {
     color: #36454F; 
-    margin-bottom: 5%;
 }
 
 .input-field {
-    margin-bottom: 5%;
+    margin-bottom: 7%;
     width: 100%;
 }
 
@@ -63,7 +62,6 @@ h1 {
     border-radius: 10px;
     cursor: pointer;
     font-size: 21px;
-    margin-top: 2%;
 }
 
 #submit-button:hover {
@@ -80,4 +78,9 @@ h1 {
 
 sup{
     color: red;
+}
+
+.error-message {
+    color: red;
+    margin-top: 2%;
 }

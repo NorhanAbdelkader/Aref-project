@@ -1,48 +1,87 @@
 import { UserInfo } from "./Article";
-import { useState,useRef  } from "react";
+import { useState, useRef } from "react";
 import "./CreateArticle.css"
+import { useAuth } from "../../hooks/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
-function CreateArticle({ addPost }){
+function CreateArticle({addpost, profile}) {
     const [content, setContent] = useState('');
     const [Images, setImages] = useState([]);
-   
+    const navigate = useNavigate();
+    const auth = useAuth();
+    const user = auth.user
+    console.log(user)
+
     const setImageList = (files) => {
-        
-        const imageFiles = Array.from(files).map(file => URL.createObjectURL(file));
+
+        // const imageFiles = Array.from(files).map(file => URL.createObjectURL(file));
+
         setImages([
             ...Images,
-            ...imageFiles
+            ...files
         ]);
     };
 
-    const handlePost = () => {
+    const handlePost = async () => {
         const newPost = {
-            id: 3, 
-            username: 'تسنيم',
+
+            userId: user._id,
             content: content,
-            profilePhoto: 'logo192.png', 
-            images: Images,
-            numLikes: 0,
-           
-            comments: [] 
+            images: Images
         };
         console.log(newPost)
-        addPost(newPost);
-        // Reset form after adding the post
+        const token = localStorage.getItem('auth-token');
+
+
+        if (!token) {
+            throw new Error('No auth token found in localStorage');
+        }
+        const formData = new FormData();
+        formData.append('userId', user._id);
+        formData.append('content',content);
+
+       
+        Images.forEach((image, index) => {
+            formData.append('images', image);
+        });
+
+
+        const response = await fetch(`http://localhost:5000/api/article/createArticle`, {
+            method: 'POST',
+            headers: {
+                //  'Content-Type': 'multipart/form-data',
+                'Authorization': token
+            },
+
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const post = await response.json();
+        console.log("savedddddd",post);
+        addpost()
+        
+        if (!profile) {
+            navigate("/home");
+        }
+
         setContent('');
         setImages([]);
     };
 
-    
-    return(
+
+    return (
         <div className="create-post">
-        <UserInfo name="تسنيم" profilePhoto="logo192.png"/>
-        
-        <PostContent images={Images} setContent={setContent} content={content}/>
-        <ImageIcon setImageList={setImageList} />
-        
-        <button onClick={handlePost} class="post-btn" >نشر</button>
-        
+            <UserInfo name={user.name.firstName +" "+user.name.lastName} profilePhoto={user.profilePhoto} />
+
+            <PostContent images={Images} setContent={setContent} content={content} />
+            <ImageIcon setImageList={setImageList} />
+
+            <button onClick={handlePost} class="post-btn" >نشر</button>
+
 
         </div>
     );
@@ -56,16 +95,19 @@ function PostContent({ setContent, content, images }) {
         <>
             <textarea className="post-input" placeholder="بم تفكر؟" value={content} onChange={handleContentChange}></textarea>
             <div className="post-images">
-                {images.map((image, index) => (
-                    <img key={index} src={image} alt={`Image ${index}`} />
-                ))}
+                {images.map((image, index) => {
+                    const imageUrl = URL.createObjectURL(image);
+                    return (
+                        <img key={index} src={imageUrl} alt={`Image ${index}`} />
+                    );
+                })}
             </div>
         </>
     );
 }
 
-export function ImageIcon({setImageList}){
-    
+export function ImageIcon({ setImageList }) {
+
     const fileInputRef = useRef(null);
     const handleImageClick = () => {
         fileInputRef.current.click();
@@ -76,22 +118,22 @@ export function ImageIcon({setImageList}){
         setImageList(files);
         console.log('Selected file:', files);
     };
-    
 
-    return(
-   <>
-        <div class="add-to-post">
-            <button class="add-btn" onClick={handleImageClick} ><img src="image-.png" alt="Image"></img></button>
-            <span>اصافة صور</span>
-        
-        </div>
-            <input  type="file" 
-            ref={fileInputRef} 
-            style={{ display: 'none' }} 
-            onChange={handleFileChange} 
-        />
 
-   </>
+    return (
+        <>
+            <div class="add-to-post">
+                <button class="add-btn" onClick={handleImageClick} ><img src="../../image-.png" alt="Image"></img></button>
+                <span>اصافة صور</span>
+
+            </div>
+            <input type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+            />
+
+        </>
     )
 }
 

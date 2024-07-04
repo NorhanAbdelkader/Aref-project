@@ -1,7 +1,7 @@
 .background-img-landing {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(rgba(250, 243, 224, 0.7), rgba(1, 57, 58, 0.7)), url('../generalComponents/1.jpg');
+    background: linear-gradient(rgba(250, 243, 224, 0.7), rgba(1, 57, 58, 0.7)), url('https://res.cloudinary.com/doxzf3r3o/image/upload/v1720051281/1_bvohsm.jpg');
     background-size: cover;
     background-position: center;
     color: #FAF3E0;

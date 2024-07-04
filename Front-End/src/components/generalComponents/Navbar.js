@@ -27,7 +27,7 @@ function Navbar() {
         <div>
             <nav className="navbar">
                 <Link to="/">
-                    <img src={require('./11.png')} alt="website-logo" className="site-logo" />
+                    <img src='https://res.cloudinary.com/doxzf3r3o/image/upload/v1720035423/11_filw09.png' alt="website-logo" className="site-logo" />
                 </Link>
 
                 <ul className="navbar-links">
@@ -37,7 +37,7 @@ function Navbar() {
                     {isLoggedIn ?
                         (<>
                             <NavbarElementLink to="/home" className="nav-item">المقالات <FaHome /></NavbarElementLink>
-                            <NavbarElementLink to="/profile" className="nav-item">الملف الشخصي <BiSolidUserCircle className="nav-icon"/></NavbarElementLink>
+                            <NavbarElementLink to={`/profile/${auth.user._id}`} className="nav-item">الملف الشخصي <BiSolidUserCircle className="nav-icon"/></NavbarElementLink>
                             
                             <li><button className="button logout" onClick={handleLogout}>تسجيل الخروج<MdLogout className="nav-icon logout"/></button></li>
                         </>):
