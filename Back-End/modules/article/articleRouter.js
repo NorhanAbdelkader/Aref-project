@@ -6,7 +6,7 @@ import { auth } from "../../middleware/auth.js";
 const router = Router()
 
 // TODO: auth before article creation/edit "midddleware"
-router.post('/createArticle', myMulter(fileValidation.image).array('images', 4), HME, createArticle);
+router.post('/createArticle', myMulter(fileValidation.image).array('images', 4), HME,auth(['Admin','User']), createArticle);
 router.put('/editArticle/:articleId', myMulter(fileValidation.image).array('images', 4), HME, editArticle);
 router.delete('/deleteArticle/:articleId', deleteArticle);
 
