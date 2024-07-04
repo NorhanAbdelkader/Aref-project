@@ -6,7 +6,7 @@ import EditProfileWindow from "./EditProfileWindow";
 
 
 
-export function UserInformationAndArticles({interests,coverPhoto,profilePhoto,changeProfilePhoto,changeCoverPhoto,changeBio}){
+export function UserInformationAndArticles({interests,coverPhoto,profilePhoto,changeProfilePhoto,changeCoverPhoto,changeBio, personal, userId}){
   const inputRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedInterst, setAddedInterst] = useState(false);
@@ -38,21 +38,21 @@ export function UserInformationAndArticles({interests,coverPhoto,profilePhoto,ch
   return(
       <div className="userInformation-Articles">
       <div class="user-information">
-          <h2>User Information</h2>
-          <h3>interests</h3> 
+          <h2>معلومات عن المستخدم</h2>
+          <h3>الاهتمامات</h3> 
           <ul>
               {interests}
           </ul>
-          <input ref={inputRef} type="text" placeholder="add interset ....." />
+          { personal ? <input ref={inputRef} type="text" placeholder="أضف إهتمامك...." /> : <></> }
           {/* {addedInterst &&  <input ref={inputRef} type="text" placeholder="add interset ....." />} */}
-          <button onClick={addInterest}>Add interests</button>
-          <button onClick={handleOpenModal}>Edit profile</button>
+          { personal ? <button onClick={addInterest}>إضافة إهتمام جديد</button> : <></> }
+          { personal ? <button onClick={handleOpenModal}>تعديل الملف الشخصي</button> : <></> }
       
       </div>
       {isModalOpen && <EditProfileWindow coverPhoto={coverPhoto} profilePhoto={profilePhoto}
        onClose={handleCloseModal} changeProfilePhoto={changeProfilePhoto} 
         changeCoverPhoto={changeCoverPhoto} changeBio={changeBio}/>}
-      <UserArticles/>
+      <UserArticles userId = {userId} personal = {personal}/>
   </div>
   )
 }
@@ -60,30 +60,51 @@ export function UserInformationAndArticles({interests,coverPhoto,profilePhoto,ch
 
 
 
-export function UserArticles({id}){
+export function UserArticles({userId, personal}){
     const [posts, setPosts] = useState([]);
-    useEffect(() => { 
-      fetch(`/posts.json`) 
-        .then((response) => response.json()) 
-        .then((data) => setPosts(data)) 
-        .catch((error) => console.log(error)); 
-    }, []); 
-      
 
-    const addPost = (newPost) => {
-      setPosts([...posts, newPost]);
-  };
+    useEffect(() => {
+      const token = localStorage.getItem("auth-token");
+  
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/api/user/viewUserArticles/${userId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': token,
+            },
+          });
+          if (!token) {
+            throw new Error('No auth token found in localStorage');
+          } 
+          
+          if (!response.ok) {
+            console.log(response)
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          setPosts(data);
 
-     console.log(`post ${posts}`)
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      fetchData();
+    }, [userId]);
+  
     return(
       <div className="user-article">
-      <CreateArticle   addPost={addPost}/>
-      <div>
-      {posts.map(post => (
-                    <Article  key={post.id} id={post.id} name={post.username} content={post.content}
-                     profilePhoto={post.profilePhoto} images={post.images} numLikes={post.numLikes} comments={post.comments}/>
+        { personal ? <CreateArticle /> : <></> }
+        <div>
+            {posts.map(post => (
+                    <Article key={post.id} id={post._id} name={post.userId.name.firstName + " " + post.userId.name.lastName} content={post.content}
+                    profilePhoto={post.userId.profilePhoto} images={post.images} numLikes={post.likesNum}
+                     numComments={post.commentsNum}comments={post.comments} />
                 ))}
-      </div>
+        </div>
       
       </div>
     )

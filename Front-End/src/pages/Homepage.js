@@ -50,7 +50,7 @@ function HomePage() {
         <CreateArticle className='create'/>
         <div>
           {posts.map(post => (
-            <Article key={post.id} id={post._id} name={post.userId.name.firstName} content={post.content}
+            <Article key={post.id} id={post._id} name={post.userId.name.firstName + " " + post.userId.name.lastName} content={post.content}
               profilePhoto={post.userId.profilePhoto} images={post.images} numLikes={post.likesNum}
                numComments={post.commentsNum}comments={post.comments} />
           ))}

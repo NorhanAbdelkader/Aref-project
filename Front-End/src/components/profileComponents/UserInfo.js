@@ -5,7 +5,7 @@ import EditProfileWindow from "./EditProfileWindow";
 
 
 
-export function ProfileCard({username,bio,coverPhoto,profilePhoto}){
+export function ProfileCard({username,bio,coverPhoto,profilePhoto,personal}){
     
     return(
         <div className="profile-card">
@@ -21,8 +21,8 @@ export function ProfileCard({username,bio,coverPhoto,profilePhoto}){
                
                </div>
                <div className="social-icons">
-                   <button >إضافة صديق</button>
-                   <button >إرسال رسالة</button>
+                   { !personal ? <button >متابعة </button> : <></>} 
+                   {/* <button >إرسال رسالة</button> */}
                </div>
         </div>
    </div>

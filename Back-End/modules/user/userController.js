@@ -275,8 +275,8 @@ export const removeInterest = async (req, res) => {
 // DONE:
 export const viewUserArticles = async (req, res) => {
     try {
-        const userId = req.params.userId;
-        const user = await userModel.findById(userId);
+
+        const user = await userModel.findById(req.params.userId);
 
         if (!user) {
             return res.status(400).json({ error: 'User not found' });

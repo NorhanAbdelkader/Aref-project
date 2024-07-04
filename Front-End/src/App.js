@@ -22,7 +22,7 @@ function App() {
           {/*Private */}
           <Route path="/home" element={<HomePage />} />
           <Route path="/library" element={<LibraryPage />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile/:userId" element={<UserProfile/>} />
 
         </Routes>
       </AuthProvider>

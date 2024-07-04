@@ -266,14 +266,24 @@ export const viewArticles = async(req, res) => {
 }
 
 export const getArticle = async (articleId) => {
-    const article = await articleModel.findById(articleId).populate({ 
+    const article = await articleModel.findById(articleId).populate({
         path: 'comments',
-        populate: {
-          path: 'replies',
-          model: 'Reply'
-        } 
-     })
-    .populate({ path: 'userId' });
+       
+        populate: [
+          {
+            path: 'replies',
+            populate: { path: 'userId',select:'name profilePhoto'  } // Populate userId inside replies
+          },
+          {
+            path: 'userId',
+            select:'name profilePhoto' // Populate userId inside comments
+          }
+        ],
+        select:'-articleId' 
+      })
+      .populate({ path: 'userId',
+        select:'name profilePhoto' 
+       });
 
     return article;
 }
