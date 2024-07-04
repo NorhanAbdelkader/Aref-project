@@ -37,7 +37,7 @@ function Navbar() {
                     {isLoggedIn ?
                         (<>
                             <NavbarElementLink to="/home" className="nav-item">المقالات <FaHome /></NavbarElementLink>
-                            <NavbarElementLink to="/profile" className="nav-item">الملف الشخصي <BiSolidUserCircle className="nav-icon"/></NavbarElementLink>
+                            <NavbarElementLink to={`/profile/${auth.user._id}`} className="nav-item">الملف الشخصي <BiSolidUserCircle className="nav-icon"/></NavbarElementLink>
                             
                             <li><button className="button logout" onClick={handleLogout}>تسجيل الخروج<MdLogout className="nav-icon logout"/></button></li>
                         </>):
