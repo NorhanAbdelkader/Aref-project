@@ -27,7 +27,7 @@ function Authentication(props) {
 
     const getIsFormValid = () => {
         let newErrors = {};
-        console.log("not valid email");
+        //console.log("not valid email");
         if (!validateEmail(email)) {
             
             newErrors.email = "يرجى التأكد من أن البريد الإلكتروني صحيح";
