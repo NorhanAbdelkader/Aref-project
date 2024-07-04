@@ -23,6 +23,7 @@ const userSchema = new Schema(
             type: String,
             required: [true, "يجب ادخال كلمة المرور"],
         },
+
         verified:{
             type:Boolean,
             default:false

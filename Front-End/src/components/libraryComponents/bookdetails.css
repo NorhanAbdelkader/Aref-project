@@ -8,20 +8,22 @@
   --color6: #36454F;
   --color7: #D4AF37;
   }
- 
+
 .book-details-container{
     width: 80%;
     min-height: 90%;
+    top: 111.25px;
+    right: 250px;
     position:relative;
     display: flex;
     flex-direction: column;
-    justify-content: right;
-    margin: 5%;
+    justify-content: center;
+    margin: 0 0 0 0;
     
   }
   .image-container{
     display: flex;
-    background:linear-gradient(to left,Var(--color7),Var(--color1));
+    background:linear-gradient(Var(--color1),Var(--color2),Var(--color1));
     height: 800;
     width:600 ;
     justify-content: center;
@@ -38,16 +40,48 @@
     margin:10px  0 10px 0 ;
   }
   .text{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+    color: Var(--color2);
   }
+ 
   .Add-review{
     height:50px;
     width: 550px;
     margin-bottom: 1%;
-    background-color: Var(--color3);
-    border: Var(--color3);
+    background-color: Var(--color1);
+    border: Var(--color1);
+  }
+  .Add-review:hover{
+    background-color: Var(--color2);
+    border:  Var(--color2);
+  }
+  .Read{
+    height:50px;
+    width: 550px;
+    margin-bottom: 1%;
+    background-color:Var(--color2);
+    border: Var(--color2);
+  }
+  .Read:hover{
+    background-color: Var(--color1);
+    border: Var(--color1);
+  
+  }
+  .book-title{
+    color: #253609;
+    margin-top: auto;
+  }
+  .book-desc{
+    color: #253609;
+    margin-top: auto;
+    margin-bottom: auto;
+   
   }
   .book-details{
-    background:linear-gradient(to left,Var(--color7),Var(--color1));
+    background:Var(--color1);
+    justify-content: center;
+    text-align: center;
     margin: 0;
   }

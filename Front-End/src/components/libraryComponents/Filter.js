@@ -58,11 +58,12 @@ export default function Filter({ minPrice, maxPrice, onFilter }) {
         />
       </div>
       <div className="filtersection">
+      {  /*
         <label>
           <h2 className="filter-text">السعر</h2>
         </label>
-        <div class="range-input"> </div>
-     <PriceRangeSlider/>
+        <div class="range-input"><PriceRangeSlider/></div>
+     */}
       </div>
       <div className="filtersection">
         <h2 className="filter-text">التقييم</h2>
