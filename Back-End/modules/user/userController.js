@@ -324,7 +324,8 @@ export const editBio = async (req, res) => {
         const userId  = req.user._id;
 
         const { bio } = req.body
-
+           
+        console.log(bio)
         const user = await userModel.findById(userId)
         if (!user) {
             res.json({ message: "user not found" })

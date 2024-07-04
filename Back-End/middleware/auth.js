@@ -11,7 +11,7 @@ export const auth = (acessRoles = ['User']) => {
 
     try {
       const decodedToken = jwt.verify(token, 'privateKey');
-      console.log(decodedToken)
+      // console.log(decodedToken)
       const user = await userModel.findById(decodedToken._id);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });

@@ -11,8 +11,8 @@ router.patch('/unfollowUser',auth(['User']), unfollowUser);
 router.patch('/blockUser',auth(['User']), blockUser);
 router.patch('/unblockUser',auth(['User']), unblockUser);
 
-router.patch('/addInterest',auth(['User']), addInterest);
-router.patch('/removeInterest',auth(['User']), removeInterest);
+router.patch('/addInterest',auth(['Admin','User']), addInterest);
+router.patch('/removeInterest',auth(['Admin','User']), removeInterest);
 
 router.get('/viewUserArticles/:userId',auth(['User']), viewUserArticles);
 

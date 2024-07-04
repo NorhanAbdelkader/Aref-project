@@ -9,7 +9,7 @@ import Sidebar from "../components/homeComponents/Sidebar";
 
 function HomePage() {
   const [posts, setPosts] = useState([]);
-  useEffect(() => {
+
     const token = localStorage.getItem("auth-token");
 
     const fetchData = async () => {
@@ -37,22 +37,24 @@ function HomePage() {
       }
     };
 
+    
+   
+  useEffect(() => {
     fetchData();
   }, []);
-
-
   return (
     <>
       <Navbar />
       <Sidebar />
       <div className='home-components'>
 
-        <CreateArticle className='create'/>
+        <CreateArticle className='create'addpost={fetchData}/>
         <div>
           {posts.map(post => (
-            <Article key={post.id} id={post._id} name={post.userId.name.firstName + " " + post.userId.name.lastName} content={post.content}
+            <Article key={post.id} id={post._id} userId={post.userId._id} name={post.userId.name.firstName + " " + post.userId.name.lastName} content={post.content}
               profilePhoto={post.userId.profilePhoto} images={post.images} numLikes={post.likesNum}
-               numComments={post.commentsNum}comments={post.comments} />
+               numComments={post.commentsNum}comments={post.comments} likedUsers={post.likedUsers}
+               dislikedUsers={post.dislikedUsers} reportedUsers={post.reportedUsers}/>
           ))}
         </div>
 

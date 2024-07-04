@@ -1,4 +1,4 @@
-import { useState,useRef,useEffect  } from "react";
+import { useState, useRef, useEffect } from "react";
 import CreateArticle from "../homeComponents/CreateArticle";
 import Article from "../homeComponents/Article";
 import './UserArticles.css'
@@ -10,33 +10,48 @@ export function UserInformationAndArticles({interests,coverPhoto,profilePhoto,ch
   const inputRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedInterst, setAddedInterst] = useState(false);
-  const [interestList, setInterestList] = useState(interests); 
-  
+  const [interestList, setInterestList] = useState(interests);
+
 
   var interests = interestList.map((interest, index) => (
-      <li key={index}>{interest}</li>
-     
+    <li key={index}>{interest}</li>
+
   ));
 
-  const addInterest = () => {
-      setAddedInterst(true);
-      setInterestList([
-          ...interestList,
-          inputRef.current.value
-        ]);
-        inputRef.current.value = '';
+  const addInterest = async () => {
+    const response = await fetch(`http://localhost:5000/api/user/addInterest`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('auth-token')
+      },
+
+      body: JSON.stringify({ interest: inputRef.current.value })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const message = await response.json();
+    setAddedInterst(true);
+    setInterestList([
+      ...interestList,
+      inputRef.current.value
+    ]);
+    inputRef.current.value = '';
   };
 
   const handleOpenModal = () => {
-      setIsModalOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-      setIsModalOpen(false);
+    setIsModalOpen(false);
   };
 
-  return(
-      <div className="userInformation-Articles">
+  return (
+    <div className="userInformation-Articles">
       <div class="user-information">
           <h2>معلومات عن المستخدم</h2>
           <h3>الاهتمامات</h3> 
@@ -56,8 +71,6 @@ export function UserInformationAndArticles({interests,coverPhoto,profilePhoto,ch
   </div>
   )
 }
-
-
 
 
 export function UserArticles({userId, personal}){
@@ -105,9 +118,7 @@ export function UserArticles({userId, personal}){
                      numComments={post.commentsNum}comments={post.comments} />
                 ))}
         </div>
-      
       </div>
-    )
-  }
+  )
+}
 
-  

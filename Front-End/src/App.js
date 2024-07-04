@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route  } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import Authentication from "./components/authenticationComponents/Authentication";
 import HomePage from "./pages/Homepage";
@@ -22,7 +22,7 @@ function App() {
           {/*Private */}
           <Route path="/home" element={<HomePage />} />
           <Route path="/library" element={<LibraryPage />} />
-          <Route path="/profile/:userId" element={<UserProfile/>} />
+          <Route path="/profile/:userId" element={<UserProfile />} />
 
         </Routes>
       </AuthProvider>

@@ -6,8 +6,8 @@ import { auth } from "../../middleware/auth.js";
 const router = Router()
 
 // TODO: auth before article creation/edit "midddleware"
-router.post('/createArticle', myMulter(fileValidation.image).array('images', 4), HME, auth(['User']), createArticle);
-router.put('/editArticle/:articleId', myMulter(fileValidation.image).array('images', 4), HME, auth(['User']), editArticle);
+router.post('/createArticle', myMulter(fileValidation.image).array('images', 4), HME, auth(['Admin','User']), createArticle);
+router.put('/editArticle/:articleId', myMulter(fileValidation.image).array('images', 4), HME, auth(['Admin','User']), editArticle);
 router.delete('/deleteArticle/:articleId', auth(['Admin','User']), deleteArticle);
 
 // TODO: check if it could be "/article/:articleId/likeArticle"

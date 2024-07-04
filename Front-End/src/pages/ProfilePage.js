@@ -5,19 +5,16 @@ import Navbar from "../components/generalComponents/Navbar";
 import { useAuth } from "../hooks/AuthProvider";
 import { useParams } from "react-router-dom";
 
-
 function UserProfile() {
     const [personal, setPersonal] = useState(false);
     const [profileUser, setProfileUser] = useState(null);
     const [profilePhoto, setProfilePhoto] = useState(null);
     const [coverPhoto, setCoverPhoto] = useState(null);
     const [Bio, setBio] = useState(null);
-
     const { userId } = useParams();
-
     const auth = useAuth();
-
     const loggedInUser = auth.user;
+    // console.log(userId)
 
     useEffect(() => {
         if (String(loggedInUser._id) === String(userId)) {
@@ -56,14 +53,66 @@ function UserProfile() {
         return <div>Loading...</div>;
     }
 
-   
-    const changeProfilePhoto = (file) => {
+
+    const changeProfilePhoto = async (file) => {
+        const formData = new FormData();
+        formData.append('profile photo', file);
+        const response = await fetch(`http://localhost:5000/api/user/profilePhoto`, {
+            method: 'PATCH',
+            headers: {
+                //  'Content-Type': 'multipart/form-data',
+                'Authorization': localStorage.getItem('auth-token')
+            },
+
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const user = await response.json();
+
         setProfilePhoto(URL.createObjectURL(file));
     };
-    const changeCoverPhoto = (file) => {
+    const changeCoverPhoto = async (file) => {
+        const formData = new FormData();
+        formData.append('cover photo', file);
+        const response = await fetch(`http://localhost:5000/api/user/CoverPhoto`, {
+            method: 'PATCH',
+            headers: {
+                //  'Content-Type': 'multipart/form-data',
+                'Authorization': localStorage.getItem('auth-token')
+            },
+
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const user = await response.json();
         setCoverPhoto(URL.createObjectURL(file));
     };
-    const changeBio = (value) => {
+
+    const changeBio = async (value) => {
+        console.log(value)
+        const response = await fetch(`http://localhost:5000/api/user/Bio`, {
+            method: 'PATCH',
+            headers: {
+                 'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('auth-token')
+            },
+
+            body: JSON.stringify({ bio: value })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const message = await response.json();
         setBio(value);
     };
     return (
