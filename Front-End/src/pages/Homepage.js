@@ -42,13 +42,14 @@ function HomePage() {
   useEffect(() => {
     fetchData();
   }, []);
+  
   return (
     <>
       <Navbar />
       <Sidebar />
       <div className='home-components'>
 
-        <CreateArticle className='create'addpost={fetchData}/>
+        <CreateArticle className='create'addpost={fetchData} profile='false'/>
         <div>
           {posts.map(post => (
             <Article key={post.id} id={post._id} userId={post.userId._id} name={post.userId.name.firstName + " " + post.userId.name.lastName} content={post.content}

@@ -4,7 +4,7 @@ import "./CreateArticle.css"
 import { useAuth } from "../../hooks/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
-function CreateArticle({addpost}) {
+function CreateArticle({addpost, profile}) {
     const [content, setContent] = useState('');
     const [Images, setImages] = useState([]);
     const navigate = useNavigate();
@@ -64,7 +64,10 @@ function CreateArticle({addpost}) {
         console.log("savedddddd",post);
         addpost()
         
-        navigate("/home");
+        if (!profile) {
+            navigate("/home");
+        }
+
         setContent('');
         setImages([]);
     };
@@ -120,7 +123,7 @@ export function ImageIcon({ setImageList }) {
     return (
         <>
             <div class="add-to-post">
-                <button class="add-btn" onClick={handleImageClick} ><img src="image-.png" alt="Image"></img></button>
+                <button class="add-btn" onClick={handleImageClick} ><img src="../../image-.png" alt="Image"></img></button>
                 <span>اصافة صور</span>
 
             </div>
