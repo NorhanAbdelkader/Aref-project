@@ -1,25 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import Book from './Book';
-import { fetchBooks } from './mockLibraryService';
 import Filter from './Filter';
 import './library.css';
 import{ Search} from './Search';
-import book2 from './assets/book2.jpg'
-import {NavLink,Link} from 'react-router-dom'
+import Navbar from'../generalComponents/Navbar'
+import {Link} from 'react-router-dom'
 export default function Library() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredBooks, setFilteredBooks] = useState([]);
 
   useEffect(() => {
-    fetchBooks().then((fetchedBooks) => {
-      setBooks(fetchedBooks);
-      setFilteredBooks(fetchedBooks);
-      setLoading(false);
-    });
-  }, []);
+    fetchData()
+}, []);
+const fetchData = async ()=>{
+  try{
+   const  response=await fetch("http://localhost:5000/api/book",{method:'get'})
+    if(!response.ok)
+    {console.log("Network Error")}
+    const data=await response.json()
+    setBooks(data.books);
+      console.log("responce messsage",data.message)
 
- 
+  }
+  catch(error){
+    console.log("Error fetching data",error)
+
+  }finally {
+    setLoading(false);   }
+}
+
+console.log("book Data",books)
   const onFilter = (criteria) => {
     let filtered = books;
 
@@ -35,7 +46,6 @@ export default function Library() {
       const [minPrice, maxPrice] = criteria.priceRange;
       filtered = filtered.filter(book => book.price >= minPrice && book.price <= maxPrice);
     }
-
     if (criteria.rating && criteria.rating !== 'All') {
       switch (criteria.rating) {
         case 'Above2':
@@ -61,32 +71,35 @@ export default function Library() {
   if (loading) {
     return <div>Loading...</div>;
   }
-  const calculateTotalReviews = (ratingReviews) => {
+  const calculateTotalReviews = (ratingReviews = []) => {
     return ratingReviews.reduce((total, num) => total + num, 0);
   };
-  const calculateAverageRating = (ratingReviews) => {
+  const calculateAverageRating = (ratingReviews = []) => {
     const totalReviews = calculateTotalReviews(ratingReviews);
     const totalStars = ratingReviews.reduce((total, count, index) => total + count * (index + 1), 0);
     return totalReviews ? (totalStars / totalReviews).toFixed(1) : 0;
   };
   return (
     <div className="library-container">
-  
-    
-    
-      <div className="columns">
-          <div className="sidebar">
+      <div>
+        <Navbar/>
+      <Search/>
+      </div>
+      
+         <div className="library-sidebar">
             <Filter minPrice={0} maxPrice={200} onFilter={onFilter} />
           </div>
+          
           <div className="main-content">
-          <Search/>
-            {filteredBooks.map((book) => (
             
-              <Link to={`/books/${book.id}`}>
+          
+            {books.map((book) => (
+            
+              <Link to={`/library/${book._id}`}>
                 <div>
                  <Book
-                key={book.id}
-                bookImage={book2}
+                key={book._id}
+                bookImage={book.image}
                 bookName={book.name}
                 rating={calculateAverageRating(book.ratingReviews)}
                 reviews={calculateTotalReviews(book.ratingReviews)}
@@ -97,12 +110,9 @@ export default function Library() {
               />   
       </div>
                </Link>
-             
-
               
             ))}
             </div>
       </div>
-    </div>
   );
 }

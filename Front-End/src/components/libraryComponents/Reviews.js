@@ -2,7 +2,7 @@ import StarReviews from "./StarRewiews";
 import RatingBar from "./RatingBar";
 import './library.css'
 import './reviews.css'
-export default function Reviews(){
+export default function Reviews({rate}){
 
    return (<>
    <div className="reviews-container">

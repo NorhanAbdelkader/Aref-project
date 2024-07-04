@@ -2,8 +2,8 @@ import { Routes, Route  } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import Authentication from "./components/authenticationComponents/Authentication";
 import HomePage from "./pages/Homepage";
-
-import LibraryPage from "./pages/LibraryPage";
+import Library from "./components/libraryComponents/Library";
+import BookDetails from './components/libraryComponents/BookDetails'
 import UserProfile from "./pages/ProfilePage";
 import AuthProvider from "./hooks/AuthProvider";
 
@@ -21,7 +21,9 @@ function App() {
 
           {/*Private */}
           <Route path="/home" element={<HomePage />} />
-          <Route path="/library" element={<LibraryPage />} />
+          <Route path="/library" element={<Library/>} />
+          <Route exact path="/library/:id" element={<BookDetails/>} />
+          {/*<Route path="/library" element={<LibraryPage />} />*/}
           <Route path="/profile/:userId" element={<UserProfile />} />
 
         </Routes>

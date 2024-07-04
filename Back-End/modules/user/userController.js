@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import userModel from '../../database/models/userModel.js';
+import Token from '../../database/models/emailTokenModel.js';
 import { validateRegisterUser, validateLoginUser } from "./userValidation.js";
 import { getArticle } from "../article/articleController.js";
 import cloudinary from "../../services/cloudinary.js";
+import {sendEmail} from '../../utils/emailVerification.js'
 
 
 //register
@@ -13,7 +15,7 @@ export const register = async (req, res) => {
         return res.status(404).send(error.details[0].message);
     }
     let UserRegistered = await userModel.findOne({ email: req.body.email })
-    if (UserRegistered) {
+    if (UserRegistered && UserRegistered.verified) {
         return res.status(404).send("User already have an account");
     }
     const user = new userModel({
@@ -25,16 +27,34 @@ export const register = async (req, res) => {
         password: req.body.password,
 
     });
-
     try {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
         await user.save();
-        // const token = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
-        // res.header('auth-token', token).send(user)
-        res.status(201).json({ message: 'User registered successfully', user });
+        //const token = jwt.sign({ _id: user._id, role: user.role }, "privateKey")
+        //res.header('auth-token', token).send(user)
+        const token = await new Token({
+            userId: user._id,
+            token: jwt.sign({ email: user.email, _id: user._id }, process.env.SECRETKEY, { expiresIn: "1h" })
+          }).save();
+    const url = `http://localhost:${process.env.PORT}/${user.id}/verify/${token.token}`   
+    const subject = " Please Verify Email";
+    const message = `
+      <h3>Hello ${(user.name).firstName} ${(user.name).firstName}</h3>
+      <p>Thanks yor for registering for our services.</p>
+      <p>Click this link <a href="${url}">here</a> to verify your email</p>
+    `;
+    try{
+    await sendEmail(user.email, subject, message);}
+    catch{
+        res.status(404).send({message:"error sending email"})
+    }
+     res.status(201).send({message: "An Email sent to your account please"});
+    //res.status(201).json({ message: 'User registered successfully', user });
     } catch (error) {
         res.status(500).json({ message: 'Failed to register user', error: error.message });
     }
+  
+
 }
 
 // Login with an existing user
@@ -53,11 +73,24 @@ export const login = async (req, res) => {
     if (!checkPassword) {
         return res.status(404).send("Invalid  password");
     }
+    if(!user.verified){
+        return res.status(403).send({ message: "Verify your Account." });
+      };
     const  accesstoken = jwt.sign({ _id: user._id, role: user.role }, "privateKey");
     return res.status(200).json( { message:" done", accesstoken, user } );
 
 };
-
+export const deleteAccount=async(req,res)=>{
+    let user = await userModel.findOne({ email: req.body.email })
+    if (!user) {
+        return res.status(404).send("Invalid email ");
+    }
+    const checkPassword = bcrypt.compare(req.body.password, user.password)
+    if (!checkPassword) {
+        return res.status(404).send("Invalid  password");
+    }
+    await userModel.findByIdAndUpdate(user._id)
+}
 // request body -> has only the user's id (the friend to be added) and the current user (who made the request)
 // DONE:
 export const followUser = async (req, res) => {

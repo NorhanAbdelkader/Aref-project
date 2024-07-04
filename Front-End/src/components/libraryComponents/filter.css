@@ -19,11 +19,13 @@
     border-style: solid;
     border-radius: 0.5em;
     border-color:rgb(245, 234, 197);
+    color: Var(--color2);
     margin: 3%;
   }
   .sidebarbutton:hover{
-    background-color:  #556B2F;
-    border-color:#556B2F;;
+    background-color:  Var(--color2);
+    border-color:Var(--color2);
+    color: Var(--color1);
   }
   .radioranges{
     display: flex;
@@ -42,7 +44,7 @@
     margin-top: 3%;
   }
   .filter-text{
-   color: Var(--color4);
+   color: Var(--color2);
    font-size:10;
    margin: 3% 3% 3% 3%;
 

@@ -1,26 +1,39 @@
 import './bookdetails.css'
-import {fetchBooks} from './mockLibraryService'
-import book2 from'./assets/book2.jpg'
+import Navbar from'../generalComponents/Navbar'
+import Sidebar from'../homeComponents/Sidebar'
+
 import Reviews from './Reviews';
 import { useState,useEffect } from 'react';
 import StarRating from './StarRating'
 import {useParams} from 'react-router'
+
 //import AddReview from './AddReview';
-export default function(){ 
-    const [userRating, setUserRating] = useState(null);
+export default function BookDetails(){ 
+   const [userRating, setUserRating] = useState(null);
     const [showRatingForm, setShowRatingForm] = useState(false);
-    const [books, setBooks] = useState([]);
+    const [bookDetail, setBooks] = useState([]);
 
     const [showAddReview, setShowAddReview] =useState(false);
-    const{id}= useParams();
-    useEffect(() => {
-      fetchBooks().then((fetchedBooks) => {
-        setBooks(fetchedBooks);
-        
-         
-      });
+    const {id}= useParams();
+     useEffect(() => {
+        fetchData()
     }, []);
-    const bookDetail = books.filter(x => x.id == id)
+    const fetchData = async ()=>{
+      try{
+       const  response=await fetch(`http://localhost:5000/api/book/${id}`)
+        if(!response.ok)
+        {console.log("Network Error")}
+      const data= await response.json ();
+        setBooks( data.book)
+      }
+      catch(error){
+        console.log("Error fetching data",error)
+
+      }
+
+
+    }
+   // const bookDetail = books.filter(x => x.id == id)
     //const [reviews, setReviews] = useState([{userName:"أماني",userRate:3,userReview:"جميل"}]);
 
     /**const handleAddReview = (review) => {
@@ -34,28 +47,28 @@ export default function(){
       setShowAddReview(!showAddReview)
       console.log(`User rated this book ${rate} stars`);
     };
-    return(<>
+    return(<div>
+      <Navbar/>
+    <Sidebar/>
     <div  className="book-details-container"> 
-    
+
     <div className="image-container">
-   <img src={book2} className="cover-image" alt="غلاف الكتاب"/>
+   <img src={bookDetail.image} className="cover-image" alt="غلاف الكتاب"/>
    </div>
+
    <div className="book-details">
-  <h2 className="textle">{bookDetail.title} </h2> 
-  <p className="text">هنا وصف الكتاب نذة مختصرة عن المحتوى</p>  
-  
- 
+  <h2 className="text">{bookDetail.name} </h2> 
+  <p className="text">{bookDetail.description}</p>  
   </div>
+
+  <p className="item book-desc text">{bookDetail.author}</p> 
   <hr className="split"/>  
-  <p className="item book-desc">مصطفى صادق الرافعي</p> 
+  <p className="item book-desc text">{bookDetail.publisher}</p> 
   <hr className="split"/>  
-  <p className="item book-desc">عصير الكتب</p> 
+  <p className="item book-desc text">{bookDetail.description} </p> 
+ 
   <hr className="split"/>  
-  <p className="item book-desc">يوليو 2001 </p> 
-  <hr className="split"/>  
-  <p className="item book-desc">نبذة مختصرة للتعريف بالكتاب</p>
-  <hr className="split"/>  
-      <Reviews className="item" />
+      <Reviews className="item" rate={bookDetail.rate} />
    <div className="item">  
       <button className="Add-review" onClick={()=>setShowAddReview(!showAddReview)} >Add review</button>   
       {showAddReview&&
@@ -81,5 +94,5 @@ export default function(){
     </div>**/}
     </div>
   
-    </>)
+    </div>)
 }
