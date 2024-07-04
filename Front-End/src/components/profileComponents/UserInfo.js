@@ -21,7 +21,7 @@ export function ProfileCard({username,bio,coverPhoto,profilePhoto,personal}){
                
                </div>
                <div className="social-icons">
-                  {!personal?<button>متابعة</button>:<></>} 
+                   { !personal ? <button >متابعة </button> : <></>} 
                    {/* <button >إرسال رسالة</button> */}
                </div>
         </div>

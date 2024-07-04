@@ -1,14 +1,15 @@
 import React from 'react'
-import { SidebarElements } from './SidebarElements'
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import SidebarElements from "./SidebarElements";
+import { Link } from "react-router-dom";
 import './Sidebar.css';
 
 const Sidebar = () => {
+  const sidebarElements = SidebarElements();
   return (
     <div className='sidebar'>
       <ul className='sidebar-list'>
         {
-          SidebarElements.map((val, key) => {
+          sidebarElements.map((val, key) => {
             return (
               <Link to={val.link}>
                 <li key={key} 

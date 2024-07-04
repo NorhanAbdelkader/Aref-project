@@ -1,11 +1,9 @@
-
 import { useState, useRef, useEffect } from "react";
 import { ProfileCard } from "../components/profileComponents/UserInfo";
 import { UserInformationAndArticles } from "../components/profileComponents/UserArticles";
 import Navbar from "../components/generalComponents/Navbar";
 import { useAuth } from "../hooks/AuthProvider";
 import { useParams } from "react-router-dom";
-
 
 function UserProfile() {
     const [personal, setPersonal] = useState(false);
@@ -17,6 +15,7 @@ function UserProfile() {
     const auth = useAuth();
     const loggedInUser = auth.user;
     // console.log(userId)
+
     useEffect(() => {
         if (String(loggedInUser._id) === String(userId)) {
             setPersonal(true);
@@ -96,6 +95,7 @@ function UserProfile() {
         const user = await response.json();
         setCoverPhoto(URL.createObjectURL(file));
     };
+
     const changeBio = async (value) => {
         console.log(value)
         const response = await fetch(`http://localhost:5000/api/user/Bio`, {
@@ -118,10 +118,10 @@ function UserProfile() {
     return (
         <>
             <Navbar />
-            <ProfileCard username={profileUser.name.firstName + " " + profileUser.name.lastName} bio={Bio} coverPhoto={coverPhoto} profilePhoto={profilePhoto} personal={personal} />
+            <ProfileCard username={profileUser.name.firstName + " " + profileUser.name.lastName} bio={Bio} coverPhoto={coverPhoto} profilePhoto={profilePhoto} personal={personal}/>
             <UserInformationAndArticles interests={profileUser.interests}
                 coverPhoto={coverPhoto} profilePhoto={profilePhoto} changeProfilePhoto={changeProfilePhoto}
-                changeCoverPhoto={changeCoverPhoto} changeBio={changeBio} personal={personal} />
+                changeCoverPhoto={changeCoverPhoto} changeBio={changeBio} personal={personal} userId={userId}/>
 
         </>
     )

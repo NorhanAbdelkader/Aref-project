@@ -5,16 +5,16 @@ import { auth } from "../../middleware/auth.js";
 
 const router = Router();
 
-router.patch('/followUser', followUser);
-router.patch('/unfollowUser', unfollowUser);
+router.patch('/followUser',auth(['User']), followUser);
+router.patch('/unfollowUser',auth(['User']), unfollowUser);
 
-router.patch('/blockUser', blockUser);
-router.patch('/unblockUser', unblockUser);
+router.patch('/blockUser',auth(['User']), blockUser);
+router.patch('/unblockUser',auth(['User']), unblockUser);
 
 router.patch('/addInterest',auth(['Admin','User']), addInterest);
 router.patch('/removeInterest',auth(['Admin','User']), removeInterest);
 
-router.get('/viewUserArticles/:userId', viewUserArticles);
+router.get('/viewUserArticles/:userId',auth(['User']), viewUserArticles);
 
 router.post('/register', register);
 router.post('/login', login);

@@ -16,10 +16,10 @@ const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("auth-token");
     if (token) {
       const response = await fetch('http://localhost:5000/api/user/profile', {
-        method: 'GET', // or 'POST' if you need to send data
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token, // Replace `your-token-here` with your actual token
+          'Authorization': token,
         },
       });
       if (!response.ok) {
@@ -29,7 +29,10 @@ const AuthProvider = ({ children }) => {
 
       const initialuser = await response.json();
       setUser(initialuser.user);
-      setLoading(false);
+      setLoading(false); // ->
+    }
+    else {
+      setLoading(false); // ->
     }
   }
   initialUser()
@@ -57,7 +60,7 @@ const AuthProvider = ({ children }) => {
     navigate("/");
   };
   if (loading) {
-    return <div>Loading...</div>; // Add a loading indicator
+    return <div>Loading...</div>;
   }
   return (
     <AuthContext.Provider value={{  user, getUser, logOut }}>

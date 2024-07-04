@@ -27,7 +27,7 @@ function Navbar() {
         <div>
             <nav className="navbar">
                 <Link to="/">
-                    <img src={require('./11.png')} alt="website-logo" className="site-logo" />
+                    <img src='https://res.cloudinary.com/doxzf3r3o/image/upload/v1720035423/11_filw09.png' alt="website-logo" className="site-logo" />
                 </Link>
 
                 <ul className="navbar-links">
