@@ -1,4 +1,4 @@
-# Aref
+# <img src="https://res.cloudinary.com/doxzf3r3o/image/upload/v1720035423/11_filw09.png" alt="Aref Logo" width="110" height="50"> Aref
 
 ## Introduction
 
@@ -6,10 +6,10 @@ Aref is an online platform dedicated to classical Arabic language enthusiasts. I
 
 ## Technologies
 
-- **Frontend:** React
-- **Backend:** Node.js ,Express.js
-- **Database:** MongoDB
-- **Styling:** CSS
+![React](https://img.shields.io/badge/React-61DAFB?logo=react)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb)
+![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css3)
 
 ## Features
 
