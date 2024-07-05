@@ -75,7 +75,7 @@ function CreateArticle({addpost, profile}) {
 
     return (
         <div className="create-post">
-            <UserInfo name={user.name.firstName +" "+user.name.lastName} profilePhoto={user.profilePhoto} />
+            <UserInfo userId={user._id} name={user.name.firstName +" "+user.name.lastName} profilePhoto={user.profilePhoto} />
 
             <PostContent images={Images} setContent={setContent} content={content} />
             <ImageIcon setImageList={setImageList} />

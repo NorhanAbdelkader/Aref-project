@@ -11,22 +11,26 @@ const SidebarElements = () => {
     {
       title: "المقالات",
       link: "/home",
-      icon: <FaHome />
+      icon: <FaHome />,
+      logOut: false
     },
     {
       title: "المكتبة",
       link: "/library",
-      icon: <IoLibrary />
+      icon: <IoLibrary />,
+      logOut: false
     },
     {
       title: "الملف الشخصي",
       link: `/profile/${auth.user ? auth.user._id : ''}`,
-      icon: <BiSolidUserCircle />
+      icon: <BiSolidUserCircle />,
+      logOut: false
     },
     {
       title: "تسجيل الخروج",
       link: "/",
-      icon: <MdLogout />
+      icon: <MdLogout />,
+      logOut: true
     }
   ];
 };

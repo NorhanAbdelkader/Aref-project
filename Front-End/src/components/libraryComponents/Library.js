@@ -5,10 +5,22 @@ import './library.css';
 import{ Search} from './Search';
 import Navbar from'../generalComponents/Navbar'
 import {Link} from 'react-router-dom'
+import { BiSolidBookAdd } from "react-icons/bi";
+import { useAuth } from '../../hooks/AuthProvider';
+
 export default function Library() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredBooks, setFilteredBooks] = useState([]);
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.user && auth.user.role === "Admin") {
+      setIsAdmin(true);
+    }
+  }, []);
 
   useEffect(() => {
     fetchData()
@@ -113,6 +125,9 @@ console.log("book Data",books)
               
             ))}
             </div>
+          { isAdmin && <Link to="/admin/addBook">
+            <button className='go-to-add-book-page'><BiSolidBookAdd /></button>
+          </Link> }
       </div>
   );
 }
