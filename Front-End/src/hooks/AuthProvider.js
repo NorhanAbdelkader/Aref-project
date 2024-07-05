@@ -10,9 +10,7 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
-
-  useEffect(() => {
-    const initialUser = async () => {
+  const initialUser = async () => {
     const token = localStorage.getItem("auth-token");
     if (token) {
       const response = await fetch('http://localhost:5000/api/user/profile', {
@@ -35,8 +33,9 @@ const AuthProvider = ({ children }) => {
       setLoading(false); // ->
     }
   }
-  initialUser()
-  
+
+  useEffect(() => {
+    initialUser()
   }, []);
 
   const getUser = async (res) => {
@@ -63,7 +62,7 @@ const AuthProvider = ({ children }) => {
     return <div>Loading...</div>;
   }
   return (
-    <AuthContext.Provider value={{  user, getUser, logOut }}>
+    <AuthContext.Provider value={{  user, getUser, logOut, initialUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -118,7 +118,7 @@ function UserProfile() {
     return (
         <>
             <Navbar />
-            <ProfileCard username={profileUser.name.firstName + " " + profileUser.name.lastName} bio={Bio} coverPhoto={coverPhoto} profilePhoto={profilePhoto} personal={personal}/>
+            <ProfileCard username={profileUser.name.firstName + " " + profileUser.name.lastName} bio={Bio} coverPhoto={coverPhoto} profilePhoto={profilePhoto} personal={personal} userId={userId}/>
             <UserInformationAndArticles interests={profileUser.interests}
                 coverPhoto={coverPhoto} profilePhoto={profilePhoto} changeProfilePhoto={changeProfilePhoto}
                 changeCoverPhoto={changeCoverPhoto} changeBio={changeBio} personal={personal} userId={userId}/>

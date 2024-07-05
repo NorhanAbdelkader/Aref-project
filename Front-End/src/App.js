@@ -6,6 +6,7 @@ import Library from "./components/libraryComponents/Library";
 import BookDetails from './components/libraryComponents/BookDetails'
 import UserProfile from "./pages/ProfilePage";
 import AuthProvider from "./hooks/AuthProvider";
+import AddBookPage from "./pages/AddBookPage";
 
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
           <Route exact path="/library/:id" element={<BookDetails/>} />
           {/*<Route path="/library" element={<LibraryPage />} />*/}
           <Route path="/profile/:userId" element={<UserProfile />} />
+
+          <Route path="/admin/addBook" element={<AddBookPage />} />
 
         </Routes>
       </AuthProvider>

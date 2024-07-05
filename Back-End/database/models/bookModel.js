@@ -41,8 +41,10 @@ const bookSchema= new mongoose.Schema({
     },
     public_id:{
         type:String
+    },
+    link: {
+        type:String
     }
-    
 }, {
     timestamps: true}
 ,{ strict: false })

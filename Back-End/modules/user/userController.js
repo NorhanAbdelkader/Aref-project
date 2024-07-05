@@ -449,3 +449,34 @@ export const viewProfile = async (req, res) => {
 
 }
 
+// to add admin users
+export const createAdminUser = async (req, res) => {
+
+    const { error } = validateRegisterUser(req.body);
+    if (error) {
+        return res.status(404).send(error.details[0].message);
+    }
+    let UserRegistered = await userModel.findOne({ email: req.body.email })
+    if (UserRegistered) {
+
+        return res.status(404).send("User already have an account");
+    }
+    const user = new userModel({
+        name: {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+        },
+        email: req.body.email,
+        password: req.body.password,
+        role: "Admin"
+    });
+    try {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+        await user.save();
+        res.status(201).json({ message: 'User registered successfully', user });
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({ message: 'Failed to register user', error: error.message });
+    }
+
+}
