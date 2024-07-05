@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Aref
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+Aref is an online platform dedicated to classical Arabic language enthusiasts. It is a dynamic social media website that features an extensive library of Arabic books. This platform aims to connect individuals interested in the richness of Arabic literature, providing a space to share interests, articles, and insights on literary works.
 
-In the project directory, you can run:
+## Technologies
 
-### `npm start`
+- **Frontend:** React
+- **Backend:** Node.js ,Express.js
+- **Database:** MongoDB
+- **Styling:** CSS
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Extensive Library
 
-### `npm test`
+1. **Free Books Collection:**
+   - Users can borrow and view book content.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Premium Books Collection:**
+   - Offers premium books available for purchase.
 
-### `npm run build`
+3. **Book Management:**
+   - Filter books by category, author ,price, rate and also by user's interests.
+   - Search for books by title.
+   - Sort books by price and rate.
+   - Rate books from 1 to 5.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Home Page
+   - Share and engage with others's articles via react or comment.
+   - -user can post article
+   - -user can access others's profiles
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### User Profile
+   - Create and update personal profile , including profile photo,cover photo and user's interests
+   - Follow other users.
+## Demo    
+## Prerequisites
+    - Node.js installed on your machine
+    - MongoDB Atlas set up   
+## Configration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Install backend dependencies:**
 
-### `npm run eject`
+   ```bash
+   cd Back-End
+   npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Install frontend dependencies:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   cd Front-End
+   npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Create a .env file**
+   Create a .env file in the backend directory and add your environment variables:
+     
+    ```bash
+    DBURI=your_mongodb_uri
+    PORT=5000
+    //cloudinary setup
+    cloud_name=your_ cloud_name
+    api_key=your_ api_key
+    api_secret= your_ api_secret
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Running the Application**
+   - **Start the backend server:**
+      ```bash
+      cd Back-End
+      npm start
 
-## Learn More
+   - **Start the frontend development server:**
+      ```bash
+      cd Front-End
+      npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
