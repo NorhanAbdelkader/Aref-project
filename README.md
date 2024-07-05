@@ -1,4 +1,4 @@
-# <img src="https://res.cloudinary.com/doxzf3r3o/image/upload/v1720035423/11_filw09.png" alt="Aref Logo" width="110" height="50"> Aref
+# <img src="https://res.cloudinary.com/doxzf3r3o/image/upload/v1720035989/%D8%B9%D8%A7%D8%B1%D9%81_vwykny.png" alt="Aref Logo" width="100" height="80"> Aref
 
 ## Introduction
 
