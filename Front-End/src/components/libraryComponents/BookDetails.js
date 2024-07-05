@@ -41,11 +41,17 @@ export default function BookDetails(){
       setReviews([...reviews, review]);
       setShowAddReview(!showAddReview)
     };**/
+
     const handleRate = (rate) => {
       setUserRating(rate);
       setShowRatingForm(false);
       setShowAddReview(!showAddReview)
       console.log(`User rated this book ${rate} stars`);
+    };
+
+    const readBook = () => {
+      console.log(`Reading book: ${bookDetail.link}`);
+      window.location.href = bookDetail.link;
     };
     return(<div>
       <Navbar/>
@@ -76,7 +82,7 @@ export default function BookDetails(){
       <StarRating className ="star-rate"handleRate={handleRate}/></div>}
    </div>
    <div className="item">
-   <button className="Read" color>Read</button> 
+   <button className="Read" color onClick={readBook}>Read</button> 
    </div>
    <hr className="split"/> 
    { /*
