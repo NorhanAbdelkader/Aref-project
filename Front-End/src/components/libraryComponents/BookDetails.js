@@ -1,7 +1,7 @@
 import './bookdetails.css'
 import Navbar from'../generalComponents/Navbar'
 import Sidebar from'../homeComponents/Sidebar'
-
+import { useAuth } from '../../hooks/AuthProvider'
 import Reviews from './Reviews';
 import { useState,useEffect } from 'react';
 import StarRating from './StarRating'
@@ -9,6 +9,7 @@ import {useParams} from 'react-router'
 
 //import AddReview from './AddReview';
 export default function BookDetails(){ 
+  const authenticattedUser= useAuth();
    const [userRating, setUserRating] = useState(null);
     const [showRatingForm, setShowRatingForm] = useState(false);
     const [bookDetail, setBooks] = useState([]);
@@ -49,7 +50,9 @@ export default function BookDetails(){
     };
     return(<div>
       <Navbar/>
+      { authenticattedUser&&
     <Sidebar/>
+    }
     <div  className="book-details-container"> 
 
     <div className="image-container">
