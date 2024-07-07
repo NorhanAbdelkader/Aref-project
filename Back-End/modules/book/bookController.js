@@ -21,7 +21,6 @@ export const addbook=async(req,res)=>{
     }
 
 }
-
 export const updatebook=async(req,res)=>{
     try {
         const {id}=req.params
@@ -29,17 +28,17 @@ export const updatebook=async(req,res)=>{
         if (req.file) {
             const {secure_url,public_id} = await cloudinary.uploader.upload(req.file.path, {
                 folder: `Aref/books` })
-            
+                if (book.public_id) {
+                    console.log(book.public_id)
+                    await cloudinary.uploader.destroy(book.public_id);
+                }
              req.body.image=secure_url
              req.body.public_id=public_id
         }
         
         
         const updatedbook= await bookModel.findOneAndUpdate ({_id:id},req.body)
-        if (book.public_id) {
-            console.log(book.public_id)
-            await cloudinary.uploader.destroy(book.public_id);
-        }
+
         res.json({message:"done",updatedbook})
     } catch (error) {
         res.json({ message: "catch error",error })
@@ -93,8 +92,9 @@ export const allbooks=async(req,res)=>{
 export const rateBook=async(req,res)=>{
     try {
         const {id}=req.params
-        const{rating}=req.body
-        if (!rating || rating< 1 || rating > 5) {
+        const{rate}=req.body
+        if (!rate || rate< 1 || rate > 5) {
+            
             return res.status(400).json({ message: 'Invalid rating. Rating should be between 1 and 5.' });
         }
         const book = await bookModel.findById(id);
@@ -103,7 +103,7 @@ export const rateBook=async(req,res)=>{
 
         }
 
-        const index = rating - 1;
+        const index = rate - 1;
         
         const updatedBook= await bookModel.findOneAndUpdate({ _id: id} ,{ $inc: { [`rate.${index}`]: 1 } } ,{new:true})
 

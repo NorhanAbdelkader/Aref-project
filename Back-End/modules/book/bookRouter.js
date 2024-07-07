@@ -9,21 +9,21 @@ const router = Router();
 
 router.post("/",myMulter(fileValidation.image).single('image'),HME,auth(['Admin']), addbook)
 
-router.get("/",allbooks)
+router.get("/", allbooks)
 
 router.get("/filter", filterbooks)
 
 router.get("/sort", sortbooks)
 
-router.get("/search",searchBooksByName)
+router.get("/search", searchBooksByName)
 
-router.get("/:id", getbook)
+router.get("/:id", auth(['Admin','User']),getbook)
 
-router.patch("/:id", rateBook)
+router.patch("/:id", auth(['Admin','User']),rateBook)
 
-router.put("/:id",myMulter(fileValidation.image).single('image'),HME,auth(['Admin']), updatebook)
+router.put("/:id",myMulter(fileValidation.image).single('image'),HME, auth(['Admin']),updatebook)
 
-router.delete("/:id",auth(['Admin']), deletebook)
+router.delete("/:id", auth(['Admin']),deletebook)
 
 
 

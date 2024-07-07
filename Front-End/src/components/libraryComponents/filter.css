@@ -22,6 +22,17 @@
     color: Var(--color2);
     margin: 3%;
   }
+  .activefilterbutton{
+    justify-content: center;
+    background-color:  Var(--color2);
+    min-width: 50px;
+    height:30px;
+    border-style: solid;
+    border-radius: 0.5em;
+    border-color:Var(--color2);
+    color: Var(--color1);
+    margin: 3%; 
+  }
   .sidebarbutton:hover{
     background-color:  Var(--color2);
     border-color:Var(--color2);
@@ -31,6 +42,7 @@
     display: flex;
     flex-direction: column;
   }
+  
   .filter_input{
     margin-bottom: 5%;
     border-color: #f8f8dd;;

@@ -19,6 +19,7 @@
     flex-direction: column;
     justify-content: center;
     margin: 0 0 0 0;
+    background-color:#FAF3E0 ;
     
   }
   .image-container{
@@ -50,24 +51,29 @@
     height:50px;
     width: 550px;
     margin-bottom: 1%;
-    background-color: Var(--color1);
-    border: Var(--color1);
+    margin-right: 10%;
+    background-color: Var(--color2);
+    border: Var(--color7);
+    border-radius: 0.5rem;
   }
   .Add-review:hover{
-    background-color: Var(--color2);
+    background-color: Var(--color7);
     border:  Var(--color2);
   }
   .Read{
     height:50px;
     width: 550px;
     margin-bottom: 1%;
+    margin-right: 10%;
     background-color:Var(--color2);
     border: Var(--color2);
+    color: Var(--color1);
+    border-radius: 0.5rem;
   }
   .Read:hover{
-    background-color: Var(--color1);
-    border: Var(--color1);
-  
+    background-color: Var(--color7);
+    border: Var(--color7);
+    
   }
   .book-title{
     color: #253609;
@@ -84,4 +90,8 @@
     justify-content: center;
     text-align: center;
     margin: 0;
+  }
+
+  .BR1{
+    color: Var(--color1);
   }

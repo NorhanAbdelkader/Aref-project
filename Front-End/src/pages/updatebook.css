@@ -1,0 +1,107 @@
+.container-update-book{
+    display: flex;
+    flex-direction: column;
+    margin-right: 250px;
+    margin-top: 111.25px;
+    height: auto;
+    background-color: var(--color1);
+
+}
+#file {
+    display: none;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+
+
+.form{
+    background-color: var(--color1);
+}
+
+.image-container {
+    text-align: center;
+    margin-bottom: 20px;
+    height: 400;
+
+    
+}
+
+.image-container img {
+    height: 80%;
+    width:40% ;
+    border-radius: 8px;
+    box-shadow: 0 0 5px Var(--color6);
+}
+.description{
+    width: 70%;
+    height: 100px;
+    padding: 3px;
+}
+.split {
+    color: Var(--color1);
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 2px 0;
+}
+
+h3 {
+    color:  #014D4E;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+label {
+    color: #014D4E;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    
+  
+}
+.submit-button{
+    width: 70%;
+    height: 60px;
+    border:  #014D4E;
+    background-color:#014D4E; 
+    color: Var(--color1);
+    font-size: large;
+
+}
+.submit-button:hover{
+
+    border:  Var(--color7);
+    background-color:Var(--color7); 
+
+}
+.delete{
+    width: 70%;
+    height: 60px;
+    border:  Var(--color5);
+    background-color:Var(--color5);
+    color: Var(--color1);
+    font-size: large;
+}
+.delete:hover{
+    border:  Var(--color7);
+    background-color:Var(--color7); 
+}
+input ,textarea{
+    width: 70%;
+    height: 50px;
+    padding: 3px;
+    font-size: 16px;
+    outline: none;
+    border-style: solid;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+
+.field{
+    margin-bottom: 10px;
+}

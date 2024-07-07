@@ -1,12 +1,14 @@
 import { FaStar } from 'react-icons/fa';
-import { useState } from 'react';
-import './starstyling.css'
-export default function StarRating({handleRate}) {
+import { useState,useEffect,useRef  } from 'react';
+import './starrating.css'
+export default function StarRating({ isOpen, onClose, handleRate }) {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
- 
+
+
   return (
     <>
+    
       <div className="popup">
     <div className="popup-inner" >
       {[...Array(5)].map((_, index) => {
@@ -19,8 +21,11 @@ export default function StarRating({handleRate}) {
               name='rate'
               value={currentRate}
               onClick={(e)=>{
-  handleRate();
+  
   setRating(e.target.value)
+  handleRate(e.target.value)
+  console.log(e.target.value);
+
 }}
               style={{ display: 'none' }}
             />

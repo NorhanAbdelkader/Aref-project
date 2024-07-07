@@ -8,7 +8,7 @@
     width: 500px;
     padding: 10px;
     border-radius: .25rem;
-    margin-top: 4%;
+    margin-bottom: 4%;
     background: linear-gradient(to right,Var(--color1),rgb(246, 241, 193));
     box-shadow: 0 4px 8px rgba(138, 126, 126, 0.1);
   }
