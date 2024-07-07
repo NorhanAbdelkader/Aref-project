@@ -6,7 +6,8 @@ import { Search } from '../components/libraryComponents/Search';
 import Navbar from '../components/generalComponents/Navbar';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth } from "../hooks/AuthProvider";
-import { BiSolidPencil, BiTrash } from "react-icons/bi";
+import { BiSolidPencil, BiTrash, BiSolidBookAdd} from "react-icons/bi";
+
 export default function Library() {
   const [books, setBooks] = useState([]);
   const [bookData, setBookData] = useState([]);
@@ -197,6 +198,9 @@ export default function Library() {
           </div>
         ))}
       </div>
+      { isAdmin && <Link to="/admin/addBook">
+            <button className='go-to-add-book-page'><BiSolidBookAdd /></button>
+          </Link> }
     </div>
   );
 }

@@ -78,6 +78,20 @@ margin-bottom: 0%;
 
   }
 
+.go-to-add-book-page {
+  position: fixed;
+  bottom: 20px;
+  left: 50px;
+  padding: 10px 20px;
+  background-color: var(--color2);
+  color: var(--color1);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 /************************Responsive**********************/
 @media (min-width: 768px) {
   

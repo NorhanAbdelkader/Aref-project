@@ -21,8 +21,8 @@ export default function BookDetails() {
   const auth = useAuth();
 
   useEffect(() => {
-     fetchData()
- }, []);
+    fetchData()
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -38,7 +38,7 @@ export default function BookDetails() {
 
       const data = await response.json();
       console.log(data);
-      
+
       setBooksDetail(data.book);
       setReviews(true);
     }
@@ -46,7 +46,7 @@ export default function BookDetails() {
       console.log("Error fetching data", error)
 
     }
- }
+  }
   const loggedInUser = auth.user;
   const isAdmin = (loggedInUser.role === 'Admin');
   const calculateTotalReviews = (ratingReviews = []) => {
@@ -85,10 +85,12 @@ export default function BookDetails() {
       console.log("Error fetching data", error)
 
     }
-
-
-
   }
+
+  const readBook = () => {
+    console.log(`Reading book: ${bookDetail.link}`);
+    window.location.href = bookDetail.link;
+  };
 
   const bookD = bookDetail;
   return (<div>
@@ -113,7 +115,7 @@ export default function BookDetails() {
       <p className="item book-desc text">{bookD.description} </p>
 
       <hr className="split" />
-      { review && <Reviews className="item" rate={bookD.rate} avgRate={bookD.avgRate.toFixed(2)} totalReviews={calculateTotalReviews(bookD.rate)} />}
+      {review && <Reviews className="item" rate={bookD.rate} avgRate={bookD.avgRate.toFixed(2)} totalReviews={calculateTotalReviews(bookD.rate)} />}
       {!isAdmin && <div className="item">
         <button className="Add-review" onClick={() => setShowAddReview(!showAddReview)}> <h3 className="BR1">اضافة تقييم</h3></button>
         {showAddReview &&
@@ -121,7 +123,7 @@ export default function BookDetails() {
             <StarRating className="star-rate" handleRate={handleRate} /></div>}
       </div>}
       <div className="item">
-        <button className="Read" color><h3 className="BR1">قراءة الكتاب</h3></button>
+        <button className="Read" color onClick={readBook}><h3 className="BR1">قراءة الكتاب</h3></button>
       </div>
       <hr className="split" />
       { /*
