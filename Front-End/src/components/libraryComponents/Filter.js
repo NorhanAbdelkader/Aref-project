@@ -11,12 +11,13 @@ export default function Filter({ onFilter }) {
     'علوم': false, 'واقعي': false, 'ديني': false, 'شعر': false
   });
   const [selectedRate, setSelectedRate] = useState(null);
+  const toArabicNums=(num)=>{
+    return num.toString().replace(/\d/g, (d) => String.fromCharCode(1632 + parseInt(d)))
+   }
   const cat_list = ['الكل', 'اهتماماتي', 'رواية', 'خيالي', 'علوم', 'واقعي', 'ديني', 'شعر'];
   const rate_List = ['الكل', 'أعلى من نجمتين', `نجوم ${toArabicNums(3)} أعلى من `, `نجوم ${toArabicNums(5)} أعلى من `, `${toArabicNums(5)} نجوم`];
   const rate_values_list = ['All', 'Above2', 'Above3', 'Above4', 'Equal5'];
-const toArabicNums=(num)=>{
- return num.toString().replace(/\d/g, (d) => String.fromCharCode(1632 + parseInt(d)))
-}
+
   const toggleActive = (item) => {
     setActiveCategories(prevState => ({
       ...prevState,

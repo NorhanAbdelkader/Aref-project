@@ -4,7 +4,7 @@ import Filter from '../components/libraryComponents/Filter';
 import './library.css';
 import { Search } from '../components/libraryComponents/Search';
 import Navbar from '../components/generalComponents/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth } from "../hooks/AuthProvider";
 import { BiSolidPencil, BiTrash } from "react-icons/bi";
 export default function Library() {
@@ -14,6 +14,10 @@ export default function Library() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const auth = useAuth();
   const loggedInUser = auth.user;
+
+  const id = useParams();
+  const [isDeleted, setIsDeleted] = useState(false);
+
   const isAdmin = (loggedInUser === 'Admin');
   const categories = ['رواية', 'خيالي', 'علوم', 'واقعي', 'ديني', 'شعر'];
 
@@ -22,7 +26,7 @@ export default function Library() {
   }, []);
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/book", { method: 'get' })
+      const response = await fetch("http://localhost:5000/api/book/", { method: 'get' })
       if (!response.ok) { console.log("Network Error") }
       const data = await response.json()
       setBookData(data.books);

@@ -88,6 +88,24 @@ export default function UpdateBooks() {
             [name]:value}
         )
     }
+    const handleDelete = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/api/book/${id}`, {
+            method: 'DELETE',
+          });
+    
+          if (!response.ok) {
+            throw new Error('Failed to delete book');
+          }
+    
+          const data = await response.json();
+          alert('Book deleted successfully');
+          setIsDeleted(true)
+        } catch (error) {
+          console.error('Error deleting book:', error);
+          alert('Failed to delete book');
+        }
+      };
     const { id } = useParams();
    
         if(isDeleted) return navigate("/library");;
@@ -95,7 +113,7 @@ export default function UpdateBooks() {
           <Navbar/>
              <Sidebar/>
 
-           <div className='container'>
+           <div className='container-update-book'>
 
                 <div className="image-container">
                     <img src={bookDetail.image} alt={bookDetail.image} />
@@ -141,8 +159,8 @@ export default function UpdateBooks() {
                 </div>
                 
                 <div className='field'>
-                <label htmlFor="link"><h3> السعر</h3> </label>
-                <input type="text" id="link" name="link" value={book.link} onChange={handleChange}/>
+                <label htmlFor="link"><h3> رابط الكتاب</h3> </label>
+                <input type="text" id="link" name="link" value={bookDetail.link} onChange={handleChange}/>
                          </div>
                 <div className='field'>
                 <button type='submit' className='submit-button'onClick={handleSubmit}>حفظ التعديلات</button>

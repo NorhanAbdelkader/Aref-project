@@ -11,33 +11,44 @@ import { useParams } from 'react-router'
 export default function BookDetails() {
   const [userRating, setUserRating] = useState(null);
   const [showRatingForm, setShowRatingForm] = useState(false);
+  const [review, setReviews] = useState(false);
   const [bookDetail, setBooksDetail] = useState([]);
   const [showAddReview, setShowAddReview] = useState(false);
   const { id } = useParams();
   const auth = useAuth();
-  const loggedInUser = auth.user;
-  const isAdmin = (loggedInUser.role === 'Admin')
-  const calculateTotalReviews = (ratingReviews = []) => {
-    return ratingReviews.reduce((total, num) => total + num, 0);
-  };
 
   useEffect(() => {
-    fetchData()
-  }, []);
+     fetchData()
+ }, []);
+
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/book/${id}`)
+      const token = localStorage.getItem("auth-token");
+      const response = await fetch(`http://localhost:5000/api/book/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      },)
       if (!response.ok) { console.log("Network Error") }
+
       const data = await response.json();
-      setBooksDetail(data.book)
+      console.log(data);
+      
+      setBooksDetail(data.book);
+      setReviews(true);
     }
     catch (error) {
       console.log("Error fetching data", error)
 
     }
-
-
-  }
+ }
+  const loggedInUser = auth.user;
+  const isAdmin = (loggedInUser.role === 'Admin');
+  const calculateTotalReviews = (ratingReviews = []) => {
+    return ratingReviews.reduce((total, num) => total + num, 0);
+  };
   // const bookDetail = books.filter(x => x.id == id)
   //const [reviews, setReviews] = useState([{userName:"أماني",userRate:3,userReview:"جميل"}]);
 
@@ -75,6 +86,8 @@ export default function BookDetails() {
 
 
   }
+
+  const bookD = bookDetail;
   return (<div>
     <Navbar />
 
@@ -86,18 +99,18 @@ export default function BookDetails() {
       </div>
 
       <div className="book-details">
-        <h2 className="text">{bookDetail.name} </h2>
-        <p className="text">{bookDetail.description}</p>
+        <h2 className="text">{bookD.name} </h2>
+        <p className="text">{bookD.description}</p>
       </div>
 
-      <p className="item book-desc text">{bookDetail.author}</p>
+      <p className="item book-desc text">{bookD.author}</p>
       <hr className="split" />
-      <p className="item book-desc text">{bookDetail.publisher}</p>
+      <p className="item book-desc text">{bookD.publisher}</p>
       <hr className="split" />
-      <p className="item book-desc text">{bookDetail.description} </p>
+      <p className="item book-desc text">{bookD.description} </p>
 
       <hr className="split" />
-      <Reviews className="item" rate={bookDetail.rate} avgRate={bookDetail.avgRate} totalReviews={calculateTotalReviews(bookDetail.rate)} />
+      { review && <Reviews className="item" rate={bookD.rate} avgRate={bookD.avgRate} totalReviews={calculateTotalReviews(bookD.rate)} />}
       {!isAdmin && <div className="item">
         <button className="Add-review" onClick={() => setShowAddReview(!showAddReview)} >Add review</button>
         {showAddReview &&
