@@ -61,51 +61,24 @@ flex-direction: row;
   justify-content: center;
 }
 
-/************************Reviews********************************/
+.card-icons{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    width: 500;
+}
+.edit{
+align-self: flex-start;
+margin-bottom: 0%;
+
+}
+.delete-icon{
+  align-self: flex-end;
+  margin-bottom: 5%;
+
+  }
 
 /************************Responsive**********************/
 @media (min-width: 768px) {
   
-}
-/******search*****/
-.search-container{
- position: fixed;
- top: 111.25px;
- right: 160px;
- width: 100%;
- display: flex;
- margin:none;
- justify-content: center;
- align-content: center;
-}
-.search-input {
-  height: 40px;
-  width: 250px;
-  padding: 0 15px;
-  border: 2px solid var(--color1);
-  border-radius: 0 20px 20px 0;
-  color: var(--color7);
-  outline: none;
-  font-size: 16px;
-  margin: 20px;
-  margin-left: 0;
-}
-.search-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 40px;
-  border: 2px solid var(--color1);
-  border-radius:20px 0 0 20px; 
-  background-color: var(--color1);
-  cursor: pointer;
-  outline: none;
-  margin: 20px;
-  margin-right: 0;
-}
-
-.search-icon {
-  color: var(--color6);
-  font-size: 20px;
 }

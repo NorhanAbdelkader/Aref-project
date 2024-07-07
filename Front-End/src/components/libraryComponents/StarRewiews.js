@@ -10,8 +10,8 @@ let filling=((rating)>1)?1:rating;
 rating=rating-1<0?0:rating-1
     return(      
         <div className="star-container">
-        <FaStar className="star-empty" />
-        <FaStar className="star-filled" style={{ clipPath: `inset(0 0 0 ${100 - filling*100}% )` }} />
+        <FaStar size={20} className="star-empty" />
+        <FaStar size={20} className="star-filled" style={{ clipPath: `inset(0 0 0 ${100 - filling*100}% )` }} />
       </div>
 );
 

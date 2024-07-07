@@ -1,9 +1,13 @@
 import './bookcard.css'
 import StarReviews from "./StarRewiews";
+
 function Book(props){
     return(  
         <>
-    <card className="card">
+
+
+    <div className="card">
+   
     <div className="columns">
     <img src={props.bookImage} className='card-image' alt="Book" />   
     {////<h2 className='price'>EGP{props.price}</h2>
@@ -28,7 +32,7 @@ function Book(props){
     <div className='card-small-division card_text'>{props.publisher}</div>
     <div className='card-small-division card_text'>{props.dateOfPublish}</div>
     </div>
-   </card>
+   </div>
    </>
    );}
 export default Book

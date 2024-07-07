@@ -2,18 +2,19 @@
     display: flex;
     flex-direction: row; 
     align-items: center;
-    width: 45%;
+    width: 100%;
   margin-bottom: 50px;
   margin-top: 50px;
+  margin-right: 2%;
   }
   .reviwes-item{
       display: flex;
       flex-direction: column;
-     width: 90%;
-     margin-right: 0;
+     width: 50%;
+     margin-right: 2%;
   }
   .reviews-star{
-      width: 100%;
+      width: 50%;
     display: flex;
     flex-direction: column;
    
