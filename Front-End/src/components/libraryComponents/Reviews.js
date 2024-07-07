@@ -1,30 +1,27 @@
 import StarReviews from "./StarRewiews";
 import RatingBar from "./RatingBar";
-import './library.css'
-import './reviews.css'
-export default function Reviews({rate}){
 
+import './reviews.css'
+export default function Reviews({rate,avgRate,totalReviews}){
+    console.log(rate);
+const getPercentRate=(rateForStar)=>{
+return (rateForStar*100)/totalReviews
+}
    return (<>
    <div className="reviews-container">
     
    <div className=".reviews-star">
-   <h2 className="reviwes-star-item">4.5</h2>
-   <div>
-   <StarReviews rating={4.5}/>  
-   </div>
-   <p className="reviwes-star-item">2,508 reviews</p>
+   <h2 className="reviwes-star-item">{(avgRate).toString().replace(/\d/g, (d) => String.fromCharCode(1632 + parseInt(d)))}</h2>
+   <div className="reviwes-stars">
+   <StarReviews rating={avgRate}/>  
+   </div >
+   <p className="reviwes-star-item">{(totalReviews).toString().replace(/\d/g, (d) => String.fromCharCode(1632 + parseInt(d)))}  مراجعات</p>
    </div>
    <div className="reviwes-item">
-    <div className="reviwes-bar"><p>5</p><RatingBar rateValue={50}/>
-    </div>
-    <div className="reviwes-bar"> <p>4</p><RatingBar rateValue={30} />
-    </div>
-    <div className="reviwes-bar"><p>3</p><RatingBar rateValue={60} />
-    </div>
-    <div className="reviwes-bar"><p>2</p><RatingBar rateValue={70} />
-    </div>
-    <div className="reviwes-bar"><p>1</p><RatingBar rateValue={90}/>
-    </div>
+    {  rate.map((num,_index)=>{
+return(<div className="reviwes-bar"><p>{(_index+1).toString().replace(/\d/g, (d) => String.fromCharCode(1632 + parseInt(d)))}</p><RatingBar rateValue={getPercentRate(num)}/> </div>)})}
+   
+  
     </div>
    </div>
    </>);
