@@ -17,11 +17,11 @@ router.get("/sort", sortbooks)
 
 router.get("/search", searchBooksByName)
 
-router.get("/:id", auth(['Admin','User']),getbook)
+router.get("/:id",getbook)
 
-router.patch("/:id", auth(['Admin','User']),rateBook)
+router.patch("/:id", auth(['User']),rateBook)
 
-router.put("/:id",myMulter(fileValidation.image).single('image'),HME, auth(['Admin']),updatebook)
+router.put("/:id",myMulter(fileValidation.image).single('image'),HME,auth(['Admin']),updatebook)
 
 router.delete("/:id", auth(['Admin']),deletebook)
 

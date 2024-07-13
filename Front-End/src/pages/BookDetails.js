@@ -17,16 +17,23 @@ export default function BookDetails() {
   const [review, setReviews] = useState(false);
   const [bookDetail, setBooksDetail] = useState([]);
   const [showAddReview, setShowAddReview] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { id } = useParams();
   const auth = useAuth();
 
   useEffect(() => {
     fetchData()
   }, []);
-
+  
+  useEffect(() => {
+    if (auth.user && auth.user.role === "Admin") {
+      setIsAdmin(true);
+    }
+  }, []);
+  const token = localStorage.getItem("auth-token");
   const fetchData = async () => {
     try {
-      const token = localStorage.getItem("auth-token");
+      
       const response = await fetch(`http://localhost:5000/api/book/${id}`, {
         method: 'GET',
         headers: {
@@ -48,7 +55,7 @@ export default function BookDetails() {
     }
   }
   const loggedInUser = auth.user;
-  const isAdmin = (loggedInUser.role === 'Admin');
+ 
   const calculateTotalReviews = (ratingReviews = []) => {
     return ratingReviews.reduce((total, num) => total + num, 0);
   };
@@ -65,6 +72,7 @@ export default function BookDetails() {
 
 
   const handleRate = async (rate) => {
+
     setShowRatingForm(false);
     setShowAddReview(!showAddReview);
     try {
@@ -85,11 +93,17 @@ export default function BookDetails() {
       console.log("Error fetching data", error)
 
     }
+ 
   }
 
   const readBook = () => {
+    if(token){
     console.log(`Reading book: ${bookDetail.link}`);
-    window.location.href = bookDetail.link;
+    window.location.href = bookDetail.link;}
+    else{
+      alert("لقراءة الكتاب يجب يجب تسجيل الدخول!")
+    }
+
   };
 
   const bookD = bookDetail;
@@ -97,30 +111,31 @@ export default function BookDetails() {
     <Navbar />
 
     {loggedInUser && <Sidebar />}
-    <div className="book-details-container">
+    <div className={loggedInUser?"book-details-container":"book-details-container-public"}>
 
       <div className="image-container">
-        <img src={bookDetail.image} className="cover-image" alt="غلاف الكتاب" />
+        <img src={bookDetail?.image} className="cover-image" alt="غلاف الكتاب" />
       </div>
 
       <div className="book-details">
-        <h2 className="text">{bookD.name} </h2>
-        <p className="text">{bookD.description}</p>
+        <h2 className="text">{bookDetail?.name} </h2>
+        <p className="text">{bookDetail?.description}</p>
       </div>
 
-      <p className="item book-desc text">{bookD.author}</p>
+      <p className="item book-desc text">{bookDetail?.author}</p>
       <hr className="split" />
-      <p className="item book-desc text">{bookD.publisher}</p>
+      <p className="item book-desc text">{bookDetail?.publisher}</p>
       <hr className="split" />
-      <p className="item book-desc text">{bookD.description} </p>
+      <p className="item book-desc text">{bookDetail?.description} </p>
 
       <hr className="split" />
-      {review && <Reviews className="item" rate={bookD.rate} avgRate={bookD.avgRate.toFixed(2)} totalReviews={calculateTotalReviews(bookD.rate)} />}
+      {review && <Reviews className="item" rate={bookDetail?.rate} avgRate={bookDetail?.avgRate.toFixed(2)} totalReviews={calculateTotalReviews(bookDetail?.rate)} />}
       {!isAdmin && <div className="item">
-        <button className="Add-review" onClick={() => setShowAddReview(!showAddReview)}> <h3 className="BR1">اضافة تقييم</h3></button>
+        <button className="Add-review" onClick={() =>token? setShowAddReview(!showAddReview):alert("لتقييم الكتاب يجب يجب تسجيل الدخول!")}> <h3 className="BR1">اضافة تقييم</h3></button>
         {showAddReview &&
           <div>
-            <StarRating className="star-rate" handleRate={handleRate} /></div>}
+            <StarRating className="star-rate" handleRate={token?handleRate:alert("لتقييم الكتاب يجب يجب تسجيل الدخول!")
+ } /></div>}
       </div>}
       <div className="item">
         <button className="Read" color onClick={readBook}><h3 className="BR1">قراءة الكتاب</h3></button>

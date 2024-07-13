@@ -7,19 +7,27 @@ import Navbar from '../components/generalComponents/Navbar';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth } from "../hooks/AuthProvider";
 import { BiSolidPencil, BiTrash, BiSolidBookAdd} from "react-icons/bi";
+import ConfirmationDialog from '../components/generalComponents/ConfirmationDialog';
 
 export default function Library() {
   const [books, setBooks] = useState([]);
   const [bookData, setBookData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const auth = useAuth();
   const loggedInUser = auth.user;
 
   const id = useParams();
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const isAdmin = (loggedInUser.role === 'Admin');
+  useEffect(() => {
+    if (auth.user && auth.user.role === "Admin") {
+      setIsAdmin(true);
+    }
+  }, []);
   const categories = ['رواية', 'خيالي', 'علوم', 'واقعي', 'ديني', 'شعر'];
 
   useEffect(() => {
@@ -27,7 +35,14 @@ export default function Library() {
   }, []);
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/book/", { method: 'get' })
+      const token = localStorage.getItem("auth-token");
+      const response = await fetch("http://localhost:5000/api/book/", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      },)
       if (!response.ok) { console.log("Network Error") }
       const data = await response.json()
       setBookData(data.books);
@@ -105,9 +120,7 @@ export default function Library() {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
 
   const calculateTotalReviews = (ratingReviews = []) => {
     return ratingReviews.reduce((total, num) => total + num, 0);
@@ -151,8 +164,42 @@ export default function Library() {
       setLoading(false);
     }
   }
-  return (
-    <div className="library-container">
+  const handleDeleteButttonClick = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm =async () => {
+    //Deleting.....
+    try {
+      const response = await fetch(`http://localhost:5000/api/book/${id}`, {
+        method: 'DELETE',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        },)
+
+      if (!response.ok) {
+        throw new Error('Failed to delete book');
+      }
+
+      const data = await response.json();
+      alert('Book deleted successfully');
+      setIsDeleted(true)
+    } catch (error) {
+      console.error('Error deleting book:', error);
+      alert('Failed to delete book');
+    }
+    console.log("Item deleted");
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteModalOpen(false);
+  };
+  return (<>
+<div className="library-container">
       <div>
         <Navbar />
         <Search onSearch={handleSearch} />
@@ -163,44 +210,45 @@ export default function Library() {
       <div className="main-content">
 
         {books.map((book) => (
-          <div>
-          {/* //   {isAdmin && <div className="card-icons">
-          //     <Link to={`/updateBook/${book._id}`} key={book._id}>
-          //       <BiSolidPencil className='edit' size={30} color='#014D4E' /></Link>
-          //     <button><BiTrash className='delete-icon' size={30} color='#014D4E' onClick={handleDelete} /></button>
-          //   </div>} */}
+          <div className='library-card-division'>
+            {isAdmin&& 
+             <Link to={`/updateBook/${book._id}`} key={book._id}>
+               <BiSolidPencil className='edit' size={30} color='#014D4E' /></Link>
+              } 
 
-            {loggedInUser ? <Link to={`/library/${book._id}`} key={book._id}>
+         <Link to={`/library/${book._id}`} key={book._id}>
               <div>
                 <Book
                   bookImage={book.image}
                   bookName={book.name}
-                  rating={calculateAverageRating(book.ratingReviews)}
-                  reviews={calculateTotalReviews(book.ratingReviews)}
+                  rating={book.avgRate}
+                  reviews={calculateTotalReviews(book.rate)}
                   author={book.author}
                   publisher={book.publisher}
                   dateOfPublish={book.dateOfPublish}
                   price={book.price}
                 />
-              </div> </Link> : <div onClick={()=>{alert("سجل الدخول لقراءه الكتاب")}}>
-              <Book
-                bookImage={book.image}
-                bookName={book.name}
-                rating={calculateAverageRating(book.ratingReviews)}
-                reviews={calculateTotalReviews(book.ratingReviews)}
-                author={book.author}
-                publisher={book.publisher}
-                dateOfPublish={book.dateOfPublish}
-                price={book.price}
-              />
-            </div>
-}
+              </div> </Link>
+              {isAdmin && 
+               <div className="card-delete-icon">
+            <button  className="card-delete-icon"onClick={handleDeleteButttonClick} > <BiTrash className='delete-icon' size={30} color='#014D4E' onClick={handleDelete} /></button>
+           </div>} 
           </div>
+          
         ))}
       </div>
       { isAdmin && <Link to="/admin/addBook">
             <button className='go-to-add-book-page'><BiSolidBookAdd /></button>
           </Link> }
+          {isDeleteModalOpen && (
+        <ConfirmationDialog
+          message="هل تريد حذف هذا الكتاب نهائيًا من المكتبة؟"
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleDeleteCancel}
+        />
+      )}
+
     </div>
-  );
+
+  </>)
 }

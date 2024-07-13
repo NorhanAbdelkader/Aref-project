@@ -34,6 +34,10 @@
   background-color: #FAF3E0;
   color: #014D4E;
 } 
+.library-card-division{
+  margin-bottom: 3%;
+  margin-top: 1%;
+}
 .rows{
   display: flex;
   flex-direction: column;
@@ -61,20 +65,29 @@ flex-direction: row;
   justify-content: center;
 }
 
-.card-icons{
+.card-delete-icon{
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
     width: 500;
+    background-color: Var(--color7);
+    border: 0;
+
 }
+.card-delete-icon:hover{
+  background-color: Var(--color5);
+ 
+}
+
 .edit{
 align-self: flex-start;
 margin-bottom: 0%;
 
 }
 .delete-icon{
-  align-self: flex-end;
-  margin-bottom: 5%;
+  align-self: center;
+ margin: 2%;
+ 
 
   }
 

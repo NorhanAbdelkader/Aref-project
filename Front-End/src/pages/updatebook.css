@@ -84,6 +84,11 @@ label {
     color: Var(--color1);
     font-size: large;
 }
+.container-loading{
+display: flex;
+justify-content: center;
+align-content:center ;
+}
 .delete:hover{
     border:  Var(--color7);
     background-color:Var(--color7); 

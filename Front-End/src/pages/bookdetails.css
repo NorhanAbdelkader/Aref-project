@@ -22,6 +22,18 @@
     background-color:#FAF3E0 ;
     
   }
+  .book-details-container-public{
+    width: 100%;
+    min-height: 90%;
+    top: 111.25px;
+  
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    background-color:#FAF3E0 ;
+  }
   .image-container{
     display: flex;
     background:linear-gradient(Var(--color1),Var(--color2),Var(--color1));
@@ -80,9 +92,8 @@
     margin-top: auto;
   }
   .book-desc{
-    color: #253609;
-    margin-top: auto;
-    margin-bottom: auto;
+    color: Var(--color2);
+ 
    
   }
   .book-details{

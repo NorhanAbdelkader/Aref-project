@@ -1,0 +1,39 @@
+.confirmation-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .confirmation-dialog-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .confirmation-dialog-buttons {
+    margin-top: 20px;
+  }
+  
+  .confirm-button, .cancel-button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .confirm-button {
+    background-color: Var(--color2);
+    color: white;
+  }
+  
+  .cancel-button {
+    background-color:  Var(--color5);
+    color: white;
+  }

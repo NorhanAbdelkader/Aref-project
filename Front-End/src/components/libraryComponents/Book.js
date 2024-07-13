@@ -2,6 +2,7 @@ import './bookcard.css'
 import StarReviews from "./StarRewiews";
 
 function Book(props){
+    
     return(  
         <>
 
@@ -18,8 +19,8 @@ function Book(props){
     <div  className='star-rating'>
         <StarReviews rating={props.rating}/>
         </div>   
-    <div className='rating'>{props.rating}</div>
-    <div className='reviews'>{props.reviews}</div>     
+    <div className='rating'>{((props.rating).toFixed(2)).toString().replace(/\d/g, (d) => String.fromCharCode(1632 + parseInt(d)))}</div>
+    <div className='reviews'>{(props.reviews).toString().replace(/\d/g, (d) => String.fromCharCode(1632 + parseInt(d)))}</div>     
     </div>
     </div>
 
